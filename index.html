@@ -13,7 +13,7 @@
             text-align: center; 
             font-family: 'Poppins', sans-serif; 
             margin: 0;
-            padding: 10px; /* Menos relleno en móviles */
+            padding: 10px;
             color: white; 
             min-height: 100vh;
             display: flex;
@@ -21,10 +21,10 @@
             align-items: center;
         }
 
-        /* TÍTULO ADAPTABLE */
+        /* TÍTULO ADAPTABLE Y CONGELADO */
         h1 { 
             color: white; 
-            font-size: clamp(1.8em, 8vw, 2.8em); /* Se hace pequeño en móvil y grande en PC */
+            font-size: clamp(1.8em, 8vw, 2.8em);
             margin: 40px 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             line-height: 1.2;
@@ -33,11 +33,11 @@
         /* GALERÍA RESPONSIVE */
         .galeria { 
             display: flex; 
-            flex-wrap: wrap; /* Esto permite que bajen si no caben */
+            flex-wrap: wrap; 
             justify-content: center; 
             gap: 20px; 
             width: 100%;
-            max-width: 1200px; /* Para que en pantallas gigantes no se separen demasiado */
+            max-width: 1200px;
             margin-bottom: 50px;
         }
 
@@ -47,7 +47,6 @@
             padding: 12px;
             border-radius: 25px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            /* Ancho adaptable: en móvil ocupa casi todo, en PC máximo 300px */
             width: 90%; 
             max-width: 300px;
             margin: 0;
@@ -55,10 +54,11 @@
             position: relative;
             animation: flotarTodo 5s infinite ease-in-out;
             transition: transform 0.3s ease;
-            box-sizing: border-box; /* Para que el padding no rompa el ancho */
+            box-sizing: border-box;
+            text-decoration: none; /* Quita subrayado si se usa como enlace */
+            display: block;
         }
 
-        /* Retrasos para que el movimiento sea fluido */
         figure:nth-child(2) { animation-delay: 1s; }
         figure:nth-child(3) { animation-delay: 2s; }
 
@@ -67,17 +67,16 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Efecto táctil o de ratón */
         figure:hover {
             transform: scale(1.03);
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
-        /* IMÁGENES QUE NO SE DEFORMAN */
+        /* IMÁGENES */
         img { 
             width: 100%; 
-            height: auto; /* Altura automática para no estirar la cara */
-            aspect-ratio: 1 / 1; /* Las hace cuadradas perfectas */
+            height: auto; 
+            aspect-ratio: 1 / 1; 
             object-fit: cover; 
             border-radius: 18px;
             display: block;
@@ -90,7 +89,7 @@
             font-size: 1.1em;
         }
 
-        /* CORAZONES BLANCOS (EFECTO CLIC/TOQUE) */
+        /* CORAZONES BLANCOS */
         .heart-spark {
             position: absolute;
             pointer-events: none;
@@ -113,7 +112,7 @@
 
     <div class="galeria">
         
-        <figure onclick="crearCorazon(event)">
+        <figure class="flotar-sutil" onclick="abrirAlbum(event)">
             <img src="foto1.jpg">
             <figcaption>Nuestra primera foto</figcaption>
         </figure>
@@ -124,20 +123,32 @@
         </figure>
 
         <figure onclick="crearCorazon(event)">
-            <img src="foto3.png">
+            <img src="foto3.jpg">
             <figcaption>Nuestra historia (libro)</figcaption>
         </figure>
 
     </div>
 
     <script>
+        // Función específica para el primer elemento
+        function abrirAlbum(e) {
+            // Primero creamos el efecto de corazones para que se vea la interacción
+            crearCorazon(e);
+            
+            // Esperamos un poquito (300ms) para que se vea el corazón antes de irnos
+            setTimeout(() => {
+                window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA";
+            }, 300);
+        }
+
+        // Función general de corazones blancos
         function crearCorazon(e) {
             const heart = document.createElement('div');
             heart.className = 'heart-spark';
             heart.innerHTML = '🤍'; 
-            // Soporte para toque en móvil y clic en PC
-            const x = e.pageX || e.touches[0].pageX;
-            const y = e.pageY || e.touches[0].pageY;
+            
+            const x = e.pageX || (e.touches && e.touches[0].pageX);
+            const y = e.pageY || (e.touches && e.touches[0].pageY);
             
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';

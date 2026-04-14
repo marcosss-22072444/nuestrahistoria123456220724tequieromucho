@@ -5,100 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Historia 🤍</title>
     <style>
-        /* Estilos Globales */
+        :root {
+            --color-amor: #ff4d6d;
+            --color-corazones-titulo: #ffffff; /* Color de corazones del título */
+            --color-fondo: #fff0f3; /* Rosa pastel suave para el fondo */
+        }
+
         body { 
-            background-color: #fff5f7; /* Rosa muy claro y elegante */
+            background-color: var(--color-fondo);
             text-align: center; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Poppins', 'Segoe UI', sans-serif; 
             margin: 0;
-            padding: 50px 20px;
-            color: #444;
+            padding: 40px 20px;
+            cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym847.cur'), auto; /* Cursor de corazón */
         }
 
         h1 { 
-            color: #ff758c; 
-            font-weight: 300;
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
+            color: var(--color-amor); 
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: flotar 3s ease-in-out infinite; 
+        }
+
+        /* Estilo para los corazones blancos del título */
+        .corazon-titulo {
+            color: var(--color-corazones-titulo);
+            /* Borde rosa para que se vea sobre el fondo claro */
+            -webkit-text-stroke: 1px var(--color-amor); 
+            font-weight: normal;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         .galeria { 
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            gap: 35px; 
+            gap: 40px; 
+            margin-top: 50px;
+            perspective: 1000px; /* Para efecto 3D */
         }
 
-        /* El recuadro con efecto flotante mínimo */
         figure {
-            background: #ffffff;
-            padding: 12px;
-            border-radius: 25px; /* Bordes muy suaves */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Sombra inicial mínima */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 280px;
-            margin: 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px); /* Efecto cristal moderno */
+            padding: 15px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 300px;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden; /* Para el destello */
         }
 
-        /* Elevación sutil al pasar el ratón */
-        figure:hover {
-            transform: translateY(-8px); /* Elevación mínima */
-            box-shadow: 0 12px 25px rgba(255, 117, 140, 0.15); /* Sombra más suave y rosada */
+        /* El efecto de brillo moderno al pasar por encima */
+        figure::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            transition: all 0.7s;
+            opacity: 0;
         }
 
-        img { 
-            width: 100%; 
-            height: 320px; 
-            object-fit: cover; 
-            border-radius: 18px; /* Imagen interna también suave */
+        figure:hover::after {
+            left: 120%;
+            opacity: 1;
         }
 
-        figcaption {
-            margin-top: 15px;
-            font-weight: 500;
-            color: #ff758c;
-            font-size: 1.1em;
-        }
-
-        /* Animación suave de latido para el corazón */
-        .latido-suave {
-            animation: latir 3s infinite ease-in-out;
+        /* Animación de latido solo para la foto 1 */
+        .latido {
+            animation: latir 2s infinite;
         }
 
         @keyframes latir {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.03); }
         }
 
-        /* Corazones al hacer clic */
-        .heart-spark {
+        /* Efecto de elevación 3D moderno */
+        figure:hover {
+            transform: translateY(-20px) scale(1.05) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2);
+            background: white;
+        }
+
+        /* Oscurecer un poco las otras fotos cuando señalas una */
+        .galeria:hover figure:not(:hover) {
+            filter: grayscale(0.5) blur(2px);
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        img { 
+            width: 100%; 
+            height: 350px; 
+            object-fit: contain; /* NUEVO: Muestra la imagen entera sin recortar */
+            border-radius: 20px;
+            pointer-events: none;
+            background-color: transparent; /* Fondo transparente dentro de la tarjeta */
+        }
+
+        figcaption {
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--color-amor);
+            font-size: 1.3em;
+            letter-spacing: 1px;
+        }
+
+        /* Corazones que saltan al hacer clic */
+        .corazon-click {
             position: absolute;
             pointer-events: none;
-            animation: fadeUp 1s forwards;
-            color: #ff758c;
+            animation: saltar 0.8s ease-out forwards;
+            font-size: 24px;
+            z-index: 100;
         }
 
-        @keyframes fadeUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+        @keyframes saltar {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -150%) scale(2); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Nuestra Historia</h1>
+    <h1><span class="corazon-titulo">💖</span> Nuestra Historia <span class="corazon-titulo">💖</span></h1>
 
     <div class="galeria">
         
-        <figure class="latido-suave" onclick="spark(event)">
+        <figure class="latido" onclick="crearCorazon(event)">
             <img src="foto1.jpg">
             <figcaption>Nuestra primera foto</figcaption>
         </figure>
 
-        <figure onclick="spark(event)">
+        <figure onclick="crearCorazon(event)">
             <img src="foto2.jpg">
             <figcaption>Nuestra historia completa</figcaption>
         </figure>
@@ -106,15 +157,15 @@
     </div>
 
     <script>
-        function spark(e) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-spark';
-            heart.innerHTML = '❤️';
-            heart.style.left = e.pageX + 'px';
-            heart.style.top = e.pageY + 'px';
-            heart.style.position = 'absolute';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
+        function crearCorazon(e) {
+            const corazon = document.createElement('div');
+            corazon.className = 'corazon-click';
+            corazon.innerText = '❤️';
+            corazon.style.left = e.pageX + 'px';
+            corazon.style.top = e.pageY + 'px';
+            document.body.appendChild(corazon);
+            
+            setTimeout(() => corazon.remove(), 800);
         }
     </script>
 

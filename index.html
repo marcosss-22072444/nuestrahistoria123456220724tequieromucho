@@ -7,7 +7,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
-        /* FONDO ROSA INTENSO */
         body { 
             background-color: #e6699c; 
             text-align: center; 
@@ -21,16 +20,13 @@
             align-items: center;
         }
 
-        /* TÍTULO ADAPTABLE Y CONGELADO */
         h1 { 
             color: white; 
             font-size: clamp(1.8em, 8vw, 2.8em);
             margin: 40px 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            line-height: 1.2;
         }
 
-        /* GALERÍA RESPONSIVE */
         .galeria { 
             display: flex; 
             flex-wrap: wrap; 
@@ -38,10 +34,8 @@
             gap: 20px; 
             width: 100%;
             max-width: 1200px;
-            margin-bottom: 50px;
         }
 
-        /* ELEMENTOS (RECUADROS) */
         figure {
             background: rgba(255, 255, 255, 0.95);
             padding: 12px;
@@ -53,26 +47,17 @@
             cursor: pointer;
             position: relative;
             animation: flotarTodo 5s infinite ease-in-out;
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease; /* Más rápido */
             box-sizing: border-box;
-            text-decoration: none; /* Quita subrayado si se usa como enlace */
-            display: block;
         }
-
-        figure:nth-child(2) { animation-delay: 1s; }
-        figure:nth-child(3) { animation-delay: 2s; }
 
         @keyframes flotarTodo {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        figure:hover {
-            transform: scale(1.03);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
+        figure:active { transform: scale(0.95); } /* Feedback visual instantáneo */
 
-        /* IMÁGENES */
         img { 
             width: 100%; 
             height: auto; 
@@ -89,20 +74,18 @@
             font-size: 1.1em;
         }
 
-        /* CORAZONES BLANCOS */
         .heart-spark {
             position: absolute;
             pointer-events: none;
-            animation: fadeUp 1s forwards;
+            animation: fadeUp 0.6s forwards; /* Animación más corta */
             color: white; 
             font-size: 30px;
             z-index: 1000;
-            text-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
 
         @keyframes fadeUp {
             0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -150px) scale(2); }
+            100% { opacity: 0; transform: translate(-50%, -120px) scale(1.5); }
         }
     </style>
 </head>
@@ -111,11 +94,12 @@
     <h1>🤍 Nuestra Historia 🤍</h1>
 
     <div class="galeria">
-        
-        <figure class="flotar-sutil" onclick="abrirAlbum(event)">
-            <img src="foto1.jpg">
-            <figcaption>Nuestra primera foto</figcaption>
-        </figure>
+        <a href="https://photos.app.goo.gl/DKeySBjuzfcf59fYA" style="text-decoration: none; contents;">
+            <figure onclick="crearCorazon(event)">
+                <img src="foto1.jpg">
+                <figcaption>Nuestra primera foto</figcaption>
+            </figure>
+        </a>
 
         <figure onclick="crearCorazon(event)">
             <img src="foto2.jpg">
@@ -126,35 +110,19 @@
             <img src="foto3.png">
             <figcaption>Nuestra historia (libro)</figcaption>
         </figure>
-
     </div>
 
     <script>
-        // Función específica para el primer elemento
-        function abrirAlbum(e) {
-            // Primero creamos el efecto de corazones para que se vea la interacción
-            crearCorazon(e);
-            
-            // Esperamos un poquito (300ms) para que se vea el corazón antes de irnos
-            setTimeout(() => {
-                window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA";
-            }, 300);
-        }
-
-        // Función general de corazones blancos
         function crearCorazon(e) {
             const heart = document.createElement('div');
             heart.className = 'heart-spark';
             heart.innerHTML = '🤍'; 
-            
             const x = e.pageX || (e.touches && e.touches[0].pageX);
             const y = e.pageY || (e.touches && e.touches[0].pageY);
-            
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';
             document.body.appendChild(heart);
-            
-            setTimeout(() => { heart.remove(); }, 1000);
+            setTimeout(() => { heart.remove(); }, 600);
         }
     </script>
 

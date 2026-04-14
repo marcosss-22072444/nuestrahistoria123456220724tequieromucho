@@ -5,35 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Historia 🤍</title>
     <style>
-        /* Definición de la fuente */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
-        /* Fondo y estilos globales */
+        /* FONDO: Usando el rosa intenso que pediste */
         body { 
-            background-color: #ffebee; /* Rosa más romántico y cálido */
+            background-color: #e6699c; 
             text-align: center; 
             font-family: 'Poppins', sans-serif; 
             margin: 0;
             padding: 20px;
-            color: #444;
+            color: white; /* Texto principal en blanco para que resalte */
+            min-height: 100vh;
         }
 
-        /* Título fijo y sin movimiento (congelado) */
+        /* TÍTULO: Congelado y limpio */
         h1 { 
-            color: #d81b60; 
+            color: white; 
             font-size: 2.5em;
             margin-top: 40px;
             margin-bottom: 50px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Clase para los corazones blancos del título */
-        .white-heart {
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        /* Contenedor de la galería */
         .galeria { 
             display: flex; 
             flex-wrap: wrap; 
@@ -42,86 +35,83 @@
             margin-top: 20px;
         }
 
-        /* Estilo general para todos los elementos (recuadros) */
+        /* ELEMENTOS: Recuadros blancos con efecto flotante */
         figure {
-            background: #ffffff;
-            padding: 10px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Sombra inicial mínima */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             width: 280px;
             margin: 0;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.8);
             position: relative;
+            /* Animación unificada para todos */
+            animation: flotarTodo 5s infinite ease-in-out;
+            transition: transform 0.3s ease;
         }
 
-        /* Animación de movimiento flotante sutil y lento para los elementos */
-        .flotar-sutil {
-            animation: flotarSutil 8s infinite ease-in-out;
-        }
+        /* Variamos un poco el inicio de la animación para que no se muevan en bloque rígido */
+        figure:nth-child(2) { animation-delay: 1s; }
+        figure:nth-child(3) { animation-delay: 2s; }
 
-        /* Efecto al pasar el ratón: se eleva sutilmente */
-        figure:hover {
-            transform: translateY(-5px) scale(1.02); /* Elevación mínima */
-            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.1);
-        }
-
-        /* Definición de la animación flotante suave */
-        @keyframes flotarSutil {
+        @keyframes flotarTodo {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); } /* Solo 3px de movimiento */
+            50% { transform: translateY(-10px); }
         }
 
-        /* Estilo para las imágenes dentro de los recuadros */
+        figure:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
         img { 
             width: 100%; 
             height: 300px; 
             object-fit: cover; 
-            border-radius: 15px;
+            border-radius: 18px;
         }
 
-        /* Estilo para los títulos debajo de las imágenes */
         figcaption {
             margin-top: 15px;
-            font-weight: 300;
-            color: #d81b60;
+            font-weight: 600;
+            color: #e6699c; /* Texto del pie de foto en el rosa del fondo */
             font-size: 1.1em;
-            text-transform: capitalize;
         }
 
-        /* Efecto de corazones al hacer clic (opcional) */
+        /* CORAZONES BLANCOS AL HACER CLIC */
         .heart-spark {
             position: absolute;
             pointer-events: none;
-            animation: fadeUp 0.8s forwards;
-            color: #d81b60;
-            font-size: 20px;
+            animation: fadeUp 1s forwards;
+            color: white; /* Corazones blancos siempre */
+            font-size: 25px;
+            z-index: 1000;
+            text-shadow: 0 0 5px rgba(0,0,0,0.2);
         }
 
         @keyframes fadeUp {
             0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -100px) scale(1.5); }
+            100% { opacity: 0; transform: translate(-50%, -150px) scale(2); }
         }
     </style>
 </head>
 <body>
 
-    <h1><span class="white-heart">❤️</span> Nuestra Historia <span class="white-heart">❤️</span></h1>
+    <h1>🤍 Nuestra Historia 🤍</h1>
 
     <div class="galeria">
         
-        <figure class="flotar-sutil" onclick="crearCorazon(event)">
+        <figure onclick="crearCorazon(event)">
             <img src="foto1.jpg">
             <figcaption>Nuestra primera foto</figcaption>
         </figure>
 
-        <figure class="flotar-sutil" style="animation-delay: 2s;" onclick="crearCorazon(event)">
+        <figure onclick="crearCorazon(event)">
             <img src="foto2.jpg">
             <figcaption>Nuestra historia (fotos)</figcaption>
         </figure>
 
-        <figure class="flotar-sutil" style="animation-delay: 4s;" onclick="crearCorazon(event)">
+        <figure onclick="crearCorazon(event)">
             <img src="foto3.jpg">
             <figcaption>Nuestra historia (libro)</figcaption>
         </figure>
@@ -129,18 +119,18 @@
     </div>
 
     <script>
+        // Función mejorada para que los corazones salgan siempre en blanco
         function crearCorazon(e) {
             const heart = document.createElement('div');
             heart.className = 'heart-spark';
-            heart.innerHTML = '❤️';
+            heart.innerHTML = '🤍'; // Emoji de corazón blanco
             heart.style.left = e.pageX + 'px';
             heart.style.top = e.pageY + 'px';
-            heart.style.position = 'absolute';
             document.body.appendChild(heart);
             
             setTimeout(() => {
                 heart.remove();
-            }, 800);
+            }, 1000);
         }
     </script>
 

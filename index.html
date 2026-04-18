@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Historia 🤍</title>
+    <title>Nuestra Historia 💖</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
@@ -31,16 +31,10 @@
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            align-items: center; /* Alinea todos al mismo nivel */
+            align-items: center; 
             gap: 20px; 
             width: 100%;
-            max-width: 1000px;
-        }
-
-        /* Quitamos estilos por defecto del enlace para que no achique el cuadro */
-        .enlace-contenedor {
-            text-decoration: none;
-            display: contents; 
+            max-width: 1200px; /* Un poco más ancho para que quepan 4 en PC */
         }
 
         figure {
@@ -48,19 +42,130 @@
             padding: 12px;
             border-radius: 25px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            width: 280px; /* Tamaño fijo para PC */
-            max-width: 90%; /* Adaptable para móvil */
+            width: 280px; 
+            max-width: 90%; 
             margin: 0;
             cursor: pointer;
             position: relative;
             animation: flotarTodo 5s infinite ease-in-out;
             transition: transform 0.2s ease;
             box-sizing: border-box;
+            flex: 0 0 280px; /* Mismo tamaño exacto para todos */
         }
 
-        /* Forzamos que los tres tengan el mismo tamaño exacto */
-        figure:nth-child(n) {
-            flex: 0 0 280px; 
+        /* Retrasos de animación para que no se muevan todos a la vez */
+        figure:nth-child(2) { animation-delay: 1s; }
+        figure:nth-child(3) { animation-delay: 2s; }
+        figure:nth-child(4) { animation-delay: 3s; }
+
+        @keyframes flotarTodo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        figure:active { transform: scale(0.95); }
+
+        img { 
+            width: 100%; 
+            height: auto; 
+            aspect-ratio: 1 / 1; 
+            object-fit: cover; 
+            border-radius: 18px;
+            display: block;
+        }
+
+        figcaption {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #e6699c; 
+            font-size: 1.1em;
+        }
+
+        .heart-spark {
+            position: absolute;
+            pointer-events: none;
+            animation: fadeUp 0.6s forwards;
+            color: white; 
+            font-size: 30px;
+            z-index: 1000;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -120px) scale(1.5); }
+        }
+
+        @media (max-width: 600px) {
+            figure {
+                flex: 0 0 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🤍 Nuestra Historia 🤍</h1>
+
+    <div class="galeria">
+        
+        <figure onclick="irAlbum(event)">
+            <img src="foto1.jpg">
+            <figcaption>Nuestra primera foto</figcaption>
+        </figure>
+
+        <figure onclick="crearCorazon(event)">
+            <img src="foto2.jpg">
+            <figcaption>Nuestra historia (fotos)</figcaption>
+        </figure>
+
+        <figure onclick="crearCorazon(event)">
+            <img src="foto3.jpg">
+            <figcaption>Nuestra historia (libro)</figcaption>
+        </figure>
+
+        <figure onclick="irAmor(event)">
+            <img src="foto4.png">
+            <figcaption>Nuestro amor</figcaption>
+        </figure>
+
+    </div>
+
+    <script>
+        // Función para el primer cuadro (Google Photos)
+        function irAlbum(e) {
+            crearCorazon(e);
+            setTimeout(() => {
+                window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA";
+            }, 100);
+        }
+
+        // Función para el cuarto cuadro (amor.html)
+        function irAmor(e) {
+            crearCorazon(e);
+            setTimeout(() => {
+                window.location.href = "amor.html";
+            }, 100);
+        }
+
+        // Función general para corazones
+        function crearCorazon(e) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-spark';
+            heart.innerHTML = '🤍'; 
+            
+            const x = e.pageX || (e.touches && e.touches[0].pageX);
+            const y = e.pageY || (e.touches && e.touches[0].pageY);
+            
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove(); }, 600);
+        }
+    </script>
+
+</body>
+</html>
         }
 
         figure:nth-child(2) { animation-delay: 1s; }

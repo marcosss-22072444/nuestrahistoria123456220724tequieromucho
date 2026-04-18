@@ -22,7 +22,7 @@
 
         h1 { 
             color: white; 
-            font-size: clamp(1.8em, 8vw, 2.8em);
+            font-size: clamp(1.5em, 7vw, 2.5em);
             margin: 40px 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
@@ -35,6 +35,7 @@
             gap: 20px; 
             width: 100%;
             max-width: 1200px;
+            margin-bottom: 50px;
         }
 
         figure {
@@ -129,12 +130,12 @@
     <script>
         function irAlbum(e) {
             crearCorazon(e);
-            setTimeout(() => { window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA"; }, 100);
+            setTimeout(() => { window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA"; }, 150);
         }
 
         function irAmor(e) {
             crearCorazon(e);
-            setTimeout(() => { window.location.href = "amor.html"; }, 100);
+            setTimeout(() => { window.location.href = "amor.html"; }, 150);
         }
 
         function crearCorazon(e) {
@@ -146,303 +147,9 @@
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';
             document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 600);
-        figure:active { transform: scale(0.95); }
-
-        img { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 1 / 1; 
-            object-fit: cover; 
-            border-radius: 18px;
-            display: block;
-        }
-
-        figcaption {
-            margin-top: 15px;
-            font-weight: 600;
-            color: #e6699c; 
-            font-size: 1.1em;
-        }
-
-        .heart-spark {
-            position: absolute;
-            pointer-events: none;
-            animation: fadeUp 0.6s forwards;
-            color: white; 
-            font-size: 30px;
-            z-index: 1000;
-        }
-
-        @keyframes fadeUp {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -120px) scale(1.5); }
-        }
-
-        @media (max-width: 600px) {
-            figure { flex: 0 0 90%; }
-        }
-    </style>
-</head>
-<body>
-
-    <h1>🤍 Nuestra Historia 🤍</h1>
-
-    <div class="galeria">
-        
-        <figure onclick="irAlbum(event)">
-            <img src="foto1.jpg">
-            <figcaption>Nuestra primera foto</figcaption>
-        </figure>
-
-        <figure onclick="crearCorazon(event)">
-            <img src="foto2.jpg">
-            <figcaption>Nuestra historia (fotos)</figcaption>
-        </figure>
-
-        <figure onclick="crearCorazon(event)">
-            <img src="foto3.jpg">
-            <figcaption>Nuestra historia (libro)</figcaption>
-        </figure>
-
-        <figure onclick="irAmor(event)">
-            <img src="foto4.png">
-            <figcaption>para ti amor mio</figcaption>
-        </figure>
-
-    </div>
-
-    <script>
-        function irAlbum(e) {
-            crearCorazon(e);
-            setTimeout(() => { window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA"; }, 100);
-        }
-
-        function irAmor(e) {
-            crearCorazon(e);
-            setTimeout(() => { window.location.href = "amor.html"; }, 100);
-        }
-
-        function crearCorazon(e) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-spark';
-            heart.innerHTML = '🤍'; 
-            const x = e.pageX || (e.touches && e.touches[0].pageX);
-            const y = e.pageY || (e.touches && e.touches[0].pageY);
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 600);
-            50% { transform: translateY(-10px); }
-        }
-
-        figure:active { transform: scale(0.95); }
-
-        img { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 1 / 1; 
-            object-fit: cover; 
-            border-radius: 18px;
-            display: block;
-        }
-
-        figcaption {
-            margin-top: 15px;
-            font-weight: 600;
-            color: #e6699c; 
-            font-size: 1.1em;
-        }
-
-        .heart-spark {
-            position: absolute;
-            pointer-events: none;
-            animation: fadeUp 0.6s forwards;
-            color: white; 
-            font-size: 30px;
-            z-index: 1000;
-        }
-
-        @keyframes fadeUp {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -120px) scale(1.5); }
-        }
-
-        @media (max-width: 600px) {
-            figure {
-                flex: 0 0 90%;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <h1>🤍 Nuestra Historia 🤍</h1>
-
-    <div class="galeria">
-        
-        <figure onclick="irAlbum(event)">
-            <img src="foto1.jpg">
-            <figcaption>Nuestra primera foto</figcaption>
-        </figure>
-
-        <figure onclick="crearCorazon(event)">
-            <img src="foto2.jpg">
-            <figcaption>Nuestra historia (fotos)</figcaption>
-        </figure>
-
-        <figure onclick="crearCorazon(event)">
-            <img src="foto3.jpg">
-            <figcaption>Nuestra historia (libro)</figcaption>
-        </figure>
-
-        <figure onclick="irAmor(event)">
-            <img src="foto4.png">
-            <figcaption>Nuestro amor</figcaption>
-        </figure>
-
-    </div>
-
-    <script>
-        // Función para el primer cuadro (Google Photos)
-        function irAlbum(e) {
-            crearCorazon(e);
-            setTimeout(() => {
-                window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA";
-            }, 100);
-        }
-
-        // Función para el cuarto cuadro (amor.html)
-        function irAmor(e) {
-            crearCorazon(e);
-            setTimeout(() => {
-                window.location.href = "amor.html";
-            }, 100);
-        }
-
-        // Función general para corazones
-        function crearCorazon(e) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-spark';
-            heart.innerHTML = '🤍'; 
-            
-            const x = e.pageX || (e.touches && e.touches[0].pageX);
-            const y = e.pageY || (e.touches && e.touches[0].pageY);
-            
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
-            
             setTimeout(() => { heart.remove(); }, 600);
         }
     </script>
 
 </body>
-</html>
-        }
-
-        figure:nth-child(2) { animation-delay: 1s; }
-        figure:nth-child(3) { animation-delay: 2s; }
-
-        @keyframes flotarTodo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        figure:active { transform: scale(0.95); }
-
-        img { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 1 / 1; 
-            object-fit: cover; 
-            border-radius: 18px;
-            display: block;
-        }
-
-        figcaption {
-            margin-top: 15px;
-            font-weight: 600;
-            color: #e6699c; 
-            font-size: 1.1em;
-        }
-
-        .heart-spark {
-            position: absolute;
-            pointer-events: none;
-            animation: fadeUp 0.6s forwards;
-            color: white; 
-            font-size: 30px;
-            z-index: 1000;
-        }
-
-        @keyframes fadeUp {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -120px) scale(1.5); }
-        }
-
-        /* Ajuste para móviles: que no se vean gigantes */
-        @media (max-width: 600px) {
-            figure {
-                flex: 0 0 90%;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <h1>🤍 Nuestra Historia 🤍</h1>
-
-    <div class="galeria">
-        
-        <figure onclick="irAlbum(event)">
-            <img src="foto1.jpg">
-            <figcaption>Nuestra primera foto</figcaption>
-        </figure>
-
-        <figure onclick="crearCorazon(event)">
-            <img src="foto2.jpg">
-            <figcaption>Nuestra historia (fotos)</figcaption>
-        </figure>
-
-        <figure onclick="crearCorazon(event)">
-            <img src="foto3.png">
-            <figcaption>Nuestra historia (libro)</figcaption>
-        </figure>
-
-    </div>
-
-    <script>
-        function irAlbum(e) {
-            crearCorazon(e);
-            window.location.href = "https://photos.app.goo.gl/DKeySBjuzfcf59fYA";
-        }
-
-        function crearCorazon(e) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-spark';
-            heart.innerHTML = '🤍'; 
-            
-            const x = e.pageX || (e.touches && e.touches[0].pageX);
-            const y = e.pageY || (e.touches && e.touches[0].pageY);
-            
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
-            
-            setTimeout(() => { heart.remove(); }, 600);
-        }
-    </script>
-
-</body>
-    <script>
-  var password = "220724"; // 
-  var input = prompt("Introduce la contraseña para ver el sitio:");
-  
-  if (input !== password) {
-    alert("Acceso denegado.");
-    window.location.href = "https://google.com"; // Redirige si falla
-  }
-</script>
-
 </html>

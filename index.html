@@ -12,59 +12,47 @@
             text-align: center; 
             font-family: 'Poppins', sans-serif; 
             margin: 0;
-            padding: 10px;
+            padding: 0;
             color: white; 
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             overflow-x: hidden;
         }
 
-        /* CAPAS DE BLOQUEO Y MENSAJE */
-        .pantalla-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #e6699c;
-            display: flex;
+        /* CAPAS PRINCIPALES */
+        .seccion {
+            display: none; /* Todo oculto por defecto */
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            min-height: 100vh;
+            width: 100%;
             padding: 20px;
             box-sizing: border-box;
-            transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease;
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
-        .ocultar-suave {
-            opacity: 0;
-            filter: blur(10px);
-            transform: scale(1.1);
-            pointer-events: none;
-        }
-
-        #mensajeIntermedio { display: none; opacity: 0; }
-        .mostrar-suave { display: flex !important; animation: fadeIn 1s forwards; }
+        /* Mostrar solo la primera al cargar */
+        #capa1-password { display: flex; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
+        /* ESTILOS DE INPUT Y BOTÓN */
         input {
             padding: 15px;
             font-size: 1.2em;
             border-radius: 15px;
-            border: 2px solid rgba(255,255,255,0.5);
-            outline: none;
+            border: none;
             text-align: center;
             margin-top: 20px;
             color: #e6699c;
             font-weight: bold;
-            background: white;
+            width: 80%;
+            max-width: 250px;
         }
 
-        /* BOTÓN LLAMATIVO */
         .btn-romantico {
             margin-top: 25px;
             padding: 18px 35px;
@@ -75,158 +63,69 @@
             font-weight: 600;
             font-size: 1.2em;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             animation: pulse 2s infinite;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
         }
 
-        .btn-romantico:active { transform: scale(0.95); }
-
-        /* CONTENIDO PRINCIPAL */
-        .contenido { display: none; width: 100%; flex-direction: column; align-items: center; opacity: 0; }
-
-        h1 { 
-            color: white; 
-            font-size: clamp(1.5em, 7vw, 2.5em);
-            margin: 40px 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
+        /* GALERÍA */
         .galeria { 
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            align-items: center; 
-            gap: 25px; 
-            width: 100%;
+            gap: 20px; 
+            padding: 40px 10px;
             max-width: 1200px;
-            padding-bottom: 50px;
         }
 
         figure {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px;
-            border-radius: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 280px; 
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+            width: 280px;
             margin: 0;
-            cursor: pointer;
-            animation: flotarTodo 5s infinite ease-in-out;
-            transition: all 0.4s ease;
-            box-sizing: border-box;
-            flex: 0 0 280px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: flotar 4s infinite ease-in-out;
         }
 
-        @keyframes flotarTodo {
+        @keyframes flotar {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
 
-        img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 18px; display: block; }
+        img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 15px; }
+        figcaption { color: #e6699c; font-weight: 600; margin-top: 10px; }
 
-        figcaption { margin-top: 15px; font-weight: 600; color: #e6699c; font-size: 1.1em; }
-
-        .heart-spark {
+        /* CORAZONES AL PULSAR */
+        .heart {
             position: absolute;
             pointer-events: none;
-            animation: fadeUp 0.7s ease-out forwards;
-            color: white; 
-            font-size: 35px;
-            z-index: 1000;
+            animation: fly 0.8s linear forwards;
+            font-size: 30px;
         }
 
-        @keyframes fadeUp {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 0; transform: translate(-50%, -150px) scale(1.8); }
+        @keyframes fly {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -150px) scale(2); }
         }
-
-        @media (max-width: 600px) { figure { flex: 0 0 90%; } }
     </style>
 </head>
 <body>
 
-    <div id="bloqueo" class="pantalla-overlay">
+    <div id="capa1-password" class="seccion">
         <h2>🤍 Contraseña 🤍</h2>
         <input type="password" id="pass" placeholder="Nuestra fecha..." oninput="validar()" maxlength="6">
     </div>
 
-    <div id="mensajeIntermedio" class="pantalla-overlay">
-        <h2 style="line-height: 1.6; font-weight: 300;">esto es solo para ti....🤍</h2>
-        <button class="btn-romantico" onclick="abrirTodo()">pulsa aqui si me quieres</button>
+    <div id="capa2-frase" class="seccion">
+        <h2 style="font-weight: 300;">esto es solo para ti....🤍</h2>
+        <button class="btn-romantico" onclick="mostrarGaleria()">pulsa aqui si me quieres</button>
     </div>
 
-    <div class="contenido" id="miGaleria">
-        <h1>🤍 Nuestra Historia 🤍</h1>
-        <div class="galeria">
-            <figure onclick="irUrl(event, 'https://photos.app.goo.gl/DKeySBjuzfcf59fYA')">
-                <img src="foto1.jpg"><figcaption>Nuestra primera foto</figcaption>
-            </figure>
-            <figure onclick="crearCorazon(event)">
-                <img src="foto2.jpg"><figcaption>Nuestra historia (fotos)</figcaption>
-            </figure>
-            <figure onclick="crearCorazon(event)">
-                <img src="foto3.png"><figcaption>Nuestra historia (libro)</figcaption>
-            </figure>
-            <figure onclick="irUrl(event, 'amor.html')">
-                <img src="foto4.png"><figcaption>para ti amor mio</figcaption>
-            </figure>
-            <figure onclick="irUrl(event, 'https://marcosss-22072444.github.io/Lasjordanmiamorteamoojaladurarparasiempre/')">
-                <img src="foto5.png"><figcaption>Las jordan</figcaption>
-            </figure>
-        </div>
-    </div>
-
-    <script>
-        function validar() {
-            const input = document.getElementById('pass').value;
-            if (input === '220724') {
-                const bloqueo = document.getElementById('bloqueo');
-                bloqueo.classList.add('ocultar-suave');
-                
-                setTimeout(() => {
-                    bloqueo.style.display = 'none';
-                    const mensaje = document.getElementById('mensajeIntermedio');
-                    mensaje.classList.add('mostrar-suave');
-                }, 800);
-            }
-        }
-
-        // ESTA ES LA PARTE CORREGIDA: Ahora abre la galería, no un enlace
-        function abrirTodo() {
-            const mensaje = document.getElementById('mensajeIntermedio');
-            mensaje.classList.add('ocultar-suave');
-            
-            setTimeout(() => {
-                mensaje.style.display = 'none';
-                const galeria = document.getElementById('miGaleria');
-                galeria.style.display = 'flex'; // Cambia a flex para mostrarse
-                galeria.classList.add('mostrar-suave');
-                window.scrollTo(0,0);
-            }, 800);
-        }
-
-        function irUrl(e, url) {
-            crearCorazon(e);
-            setTimeout(() => { window.location.href = url; }, 200);
-        }
-
-        function crearCorazon(e) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-spark';
-            heart.innerHTML = '🤍'; 
-            const x = (e.pageX || (e.touches && e.touches[0].pageX));
-            const y = (e.pageY || (e.touches && e.touches[0].pageY));
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 700);
-        }
-    </script>
-</body>
-</html>
+    <div id="capa3-galeria" class="seccion" style="justify-content: flex-start;">
+        <h1>🤍 Nuestra

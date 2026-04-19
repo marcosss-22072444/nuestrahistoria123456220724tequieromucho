@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para ti, que eres mi todo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1218;
+      --muted: #5a4a55;
+      --faded: #9a7f8a;
+      --rose: #c2637a;
+      --petal: #e8b4be;
+      --paper: #faf5f0;
+      --warm: #f2e8e0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Rain canvas */
+    #rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+    }
+
+    /* Vignette */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(26,18,24,0.35) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 64px;
+      opacity: 0;
+      animation: rise 1.4s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .label {
+      font-family: 'Lato', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--faded);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    h1 span {
+      color: var(--rose);
+      display: block;
+    }
+
+    .divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--petal), transparent);
+      margin: 32px auto;
+    }
+
+    /* Heart */
+    .heart-wrap {
+      text-align: center;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: rise 1.2s ease forwards;
+      animation-delay: 0.9s;
+    }
+
+    .heart {
+      display: inline-block;
+      font-size: 2.2rem;
+      animation: heartbeat 2.6s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px rgba(194, 99, 122, 0.4));
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.18); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.12); }
+      70% { transform: scale(1); }
+    }
+
+    /* Paragraphs */
+    .carta {
+      opacity: 0;
+      animation: rise 1.4s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .carta p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.28rem);
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--ink);
+      margin-bottom: 32px;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .carta p.emphasis {
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.8vw, 1.42rem);
+      color: var(--muted);
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .carta p strong {
+      font-weight: 400;
+      color: var(--rose);
+    }
+
+    .carta p.big {
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      text-align: center;
+      color: var(--ink);
+      padding: 24px 0;
+    }
+
+    /* Promise section */
+    .promises {
+      background: var(--warm);
+      border-left: 2px solid var(--petal);
+      padding: 36px 32px;
+      margin: 48px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .promises-title {
+      font-family: 'Lato', sans-serif;
+      font-size: 9px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--faded);
+      margin-bottom: 24px;
+    }
+
+    .promise-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateX(-12px);
+      animation: slideIn 0.8s ease forwards;
+    }
+
+    .promise-item:nth-child(2) { animation-delay: 1.8s; }
+    .promise-item:nth-child(3) { animation-delay: 2.1s; }
+    .promise-item:nth-child(4) { animation-delay: 2.4s; }
+    .promise-item:nth-child(5) { animation-delay: 2.7s; }
+    .promise-item:nth-child(6) { animation-delay: 3.0s; }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .promise-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--rose);
+      margin-top: 9px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(194,99,122,0.5);
+    }
+
+    .promise-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* Closing */
+    .closing {
+      text-align: center;
+      padding: 48px 0 0;
+      opacity: 0;
+      animation: rise 1.4s ease forwards;
+      animation-delay: 3.4s;
+    }
+
+    .closing-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--ink);
+      margin-bottom: 40px;
+    }
+
+    .closing-quote em {
+      color: var(--rose);
+      font-style: normal;
+    }
+
+    .firma {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--faded);
+      margin-top: 24px;
+    }
+
+    .firma::before {
+      content: '— ';
+    }
+
+    /* Petals */
+    .petal-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -30px;
+      font-size: 14px;
+      opacity: 0;
+      animation: fall linear infinite;
+      color: var(--rose);
+      filter: blur(0.3px);
+    }
+
+    @keyframes fall {
+      0%   { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0); }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(105vh) rotate(540deg) translateX(60px); }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .page { padding: 60px 24px 80px; }
+      .promises { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="rain"></canvas>
+
+<div class="petal-container" id="petals"></div>
+
+<div class="page">
+
+  <header class="header">
+    <p class="label">Una carta desde el corazón</p>
+    <h1>
+      No me dejes.<br/>
+      <span>Todavía te necesito.</span>
+    </h1>
+    <div class="divider"></div>
+  </header>
+
+  <div class="heart-wrap">
+    <span class="heart">🩷</span>
+  </div>
+
+  <div class="carta">
+
+    <p>
+      No sé cómo empezar esto. He pensado estas palabras mil veces en mi cabeza,
+      llorando y preguntándome cómo llegamos hasta aquí.
+      Pero aquí estoy, porque <strong>no me rindo</strong>. No me rindo en nosotros.
+    </p>
+
+    <p class="emphasis">
+      "Hay personas que entran en tu vida y cambian todo para siempre. Tú eres esa persona para mí."
+    </p>
+
+    <p>
+      Sé que he cometido errores, muchos. Sé que cuando debí cambiar, fallé. Sé que te he dado
+      muchas promesas que… bueno, no se han terminado cumpliendo. Que no di lo que merecías,
+      que el peso de mis propias actitudes te jodió y que no tenías culpa de ninguna de ellas.
+      Y dándome cuenta de que <strong>he destrozado la relación</strong>, me duele más de lo que puedo expresar.
+    </p>
+
+    <p>
+      Pero también sé que lo que siento por ti es real. No es costumbre. No es miedo a estar solo.
+      Es que <strong>eres tú</strong>. Eres la persona con quien quiero despertar, con quien quiero pasar
+      todo lo que venga, con quien quiero construir algo que dure y que me acompañe por el resto de mis días.
+    </p>
+
+    <p class="big">
+      Por favor, no te vayas todavía.<br/>
+      Déjame demostrártelo.
+    </p>
+
+    <p>
+      Estoy dispuesto a cambiar. No como siempre, sino como decisión tomada desde dentro de mí.
+      Sé que las palabras son fáciles y que lo que necesitas es ver hechos.
+      Y los verás. Cueste lo que cueste, lo haré, <strong>cambiaré lo que hay que cambiar</strong>,
+      pediré ayuda, pondré todo de mi parte para ser la persona que mereces tener a tu lado
+      y ser ese hombre perfecto.
+    </p>
+
+    <div class="promises">
+      <p class="promises-title">Te prometo que</p>
+
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text">Voy a cambiar cueste lo que cueste, a tu lado.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text">Cuidarte con hechos, no solo con palabras.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text">Trabajar en mí mismo. Admitir mis errores y no permitir que vuelvan a hacerte daño.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text">Hacerte sentir segura y amada cada día. Que jamás tengas que dudar de lo importante que eres para mí.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text">No volver a darte razones para sufrir. Ese dolor que estás pasando no volverá.</p>
+      </div>
+    </div>
+
+    <p>
+      No te pido que olvides lo que ha pasado. Te pido que me des la oportunidad de demostrarte
+      que puedo ser diferente. Que esto que tenemos vale la pena. Que <strong>tú vales la pena</strong>,
+      y yo también quiero merecer estar a tu lado.
+    </p>
+
+    <p>
+      Si alguna parte de ti todavía siente algo, si hay aunque sea una pequeña parte de lo nuestro
+      que no se ha apagado del todo, por favor… quédate. No por mí solamente.
+      Quédate por eso que fuimos, por lo que podemos llegar a ser.
+    </p>
+
+    <p class="emphasis">
+      "Voy a cambiar. Solo dame la oportunidad de demostrarlo."
+    </p>
+
+    <p>
+      Te amo. Te amo tanto que lo siento en el fondo de mi corazón. Y en ese amor está
+      la motivación para cambiar. Solo necesito que no cierres esta relación, porque no puedo
+      dejarte como una sola "etapa"… porque para mí eres <strong>muchísimo más que eso</strong>.
+    </p>
+
+  </div>
+
+  <div class="closing">
+    <p class="closing-quote">
+      Sin ti, el mundo sigue girando.<br/>
+      Pero <em>yo no sé cómo hacerlo.</em>
+    </p>
+    <div class="divider"></div>
+    <p class="firma">Con todo lo que tengo y mi corazón te puede dar. Te amo, bichito.</p>
+  </div>
+
+</div>
+
+<script>
+  /* Rain effect */
+  const canvas = document.getElementById('rain');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const drops = Array.from({ length: 120 }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    len: Math.random() * 18 + 8,
+    speed: Math.random() * 3 + 2,
+    opacity: Math.random() * 0.4 + 0.1,
+    width: Math.random() * 0.6 + 0.3,
+  }));
+
+  function drawRain() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drops.forEach(d => {
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - 1, d.y + d.len);
+      ctx.strokeStyle = `rgba(160, 120, 140, ${d.opacity})`;
+      ctx.lineWidth = d.width;
+      ctx.stroke();
+      d.y += d.speed;
+      if (d.y > canvas.height) {
+        d.y = -d.len;
+        d.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(drawRain);
+  }
+  drawRain();
+
+  /* Falling petals */
+  const petalContainer = document.getElementById('petals');
+  const symbols = ['✦', '·', '◦', '∘'];
+
+  function createPetal() {
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.fontSize = (Math.random() * 10 + 8) + 'px';
+    p.style.animationDuration = (Math.random() * 8 + 7) + 's';
+    p.style.animationDelay = (Math.random() * 5) + 's';
+    p.style.opacity = (Math.random() * 0.4 + 0.2);
+    petalContainer.appendChild(p);
+    setTimeout(() => p.remove(), 16000);
+  }
+
+  setInterval(createPetal, 600);
+</script>
+
+</body>
+</html>

@@ -150,7 +150,6 @@
     </div>
 
     <script>
-        // Cargar la API de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -161,29 +160,39 @@
             player = new YT.Player('player', {
                 height: '0',
                 width: '0',
-                videoId: '9n-hyA2-FDg', // El ID del video de Louis Armstrong
+                videoId: '9n-hyA2-FDg',
                 playerVars: {
                     'autoplay': 0,
                     'controls': 0,
                     'loop': 1,
                     'playlist': '9n-hyA2-FDg'
+                },
+                events: {
+                    'onReady': onPlayerReady
                 }
             });
+        }
+
+        function onPlayerReady(event) {
+            // El reproductor ya está cargado y listo para sonar al instante
         }
 
         function validar() {
             const val = document.getElementById('pass').value;
             if (val === '220724') {
                 document.getElementById('pass').blur();
+                // Al poner la pass, ya le decimos que se prepare (buffer)
+                if (player && player.cueVideoById) {
+                    player.setVolume(25);
+                }
                 document.getElementById('capa1-password').style.display = 'none';
                 document.getElementById('capa2-frase').style.display = 'flex';
             }
         }
 
         function mostrarGaleria() {
-            // Iniciar música de forma suave
-            if (player && player.playVideo) {
-                player.setVolume(25); // Volumen bajito tipo restaurante
+            // Ejecución inmediata
+            if (player) {
                 player.playVideo();
             }
 
@@ -192,9 +201,7 @@
             window.scrollTo(0,0);
         }
 
-        function ir(url) {
-            window.location.href = url;
-        }
+        function ir(url) { window.location.href = url; }
 
         function corazon(e) {
             const h = document.createElement('div');

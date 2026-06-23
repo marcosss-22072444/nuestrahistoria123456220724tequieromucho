@@ -90,7 +90,7 @@ body{
   font-size: 4.2rem;
 }
 
-/* TARJETA NUEVA: Con foto7.png de fondo asegurando su visibilidad */
+/* Fondo con la imagen foto7.png para el nuevo cuadrado */
 .menu-card.foto7-bg {
   background-image: url('foto7.png');
   background-repeat: no-repeat;
@@ -99,7 +99,7 @@ body{
   position: relative;
 }
 
-/* Filtro sutil inferior para asegurar la lectura del texto rosa */
+/* Filtro sutil para asegurar que las letras rosas se lean perfectamente sobre tu foto */
 .menu-card.foto7-bg::after {
   content: '';
   position: absolute;
@@ -146,20 +146,6 @@ body{
   position:relative; overflow:hidden;
 }
 @keyframes cardPop{from{opacity:0;transform:scale(0.3) rotate(-8deg)}to{opacity:1;transform:scale(1)}}
-
-/* Fondo del modal personalizado */
-.card.modal-foto7 {
-  background-image: url('foto7.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-}
-.card.modal-foto7::before {
-  content:''; position:absolute; inset:0;
-  background: rgba(255, 240, 246, 0.65);
-  z-index: 0;
-}
-.card.modal-foto7 * { position: relative; z-index: 1; }
 
 .card-top-heart{display:flex;align-items:center;justify-content:center;margin-bottom:.7rem;animation:topHeart 2s ease-in-out infinite;transform-origin:center;}
 .card-top-heart svg{width:72px;height:66px;filter:drop-shadow(0 4px 12px rgba(180,0,60,0.45));}
@@ -237,16 +223,10 @@ body{
 </div>
 
 <div class="overlay" id="modSorpresa">
-  <div class="card modal-foto7">
-    <p class="card-subtitle" style="color: #400010;">— Una Sorpresa Para Ti —</p>
-    <p class="card-main" style="color: #500015;">¡Sorpresa! 🍿</p>
-    <p class="card-body" style="color: #5a0a20; font-weight: bold; background: rgba(255,255,255,0.5); border-radius: 16px; padding: 12px;">
-      Tus abrazos son mi parte favorita<br>
-      de ver películas juntos.<br>
-      ¡Te amo muchísimo!🤍
-    </p>
-    <span class="card-hearts">🤍 🍿 🤍</span>
-    <button class="close-btn" onclick="closeModal('modSorpresa')">Cerrar 🤍</button>
+  <div class="card">
+    <p class="card-main">Sorpresa</p>
+    <p class="card-body">Aquí va el contenido de tu sorpresa.</p>
+    <button class="close-btn" onclick="closeModal('modSorpresa')">Cerrar</button>
   </div>
 </div>
 

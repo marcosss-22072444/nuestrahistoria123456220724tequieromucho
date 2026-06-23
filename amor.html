@@ -90,20 +90,22 @@ body{
   font-size: 4.2rem;
 }
 
-/* TARJETA NUEVA: Con foto7.png de fondo */
+/* TARJETA NUEVA: Con foto7.png de fondo asegurando su visibilidad */
 .menu-card.foto7-bg {
-  background: url('foto7.png') no-repeat center center;
+  background-image: url('foto7.png');
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
   position: relative;
 }
 
-/* Filtro sutil inferior para que el nombre rosa se lee perfecto */
+/* Filtro sutil inferior para asegurar la lectura del texto rosa */
 .menu-card.foto7-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 45%);
+  background: linear-gradient(to top, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 50%);
   z-index: 1;
 }
 
@@ -115,11 +117,6 @@ body{
   text-align: center;
   z-index: 2;
   white-space: nowrap;
-}
-
-/* Si el nombre es un emoji o texto largo adaptado */
-.card-text.emoji-title {
-  font-size: 1.1rem;
 }
 
 /* MODALES / OVERLAYS */
@@ -152,12 +149,14 @@ body{
 
 /* Fondo del modal personalizado */
 .card.modal-foto7 {
-  background: url('foto7.png') no-repeat center center;
+  background-image: url('foto7.png');
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
 }
 .card.modal-foto7::before {
   content:''; position:absolute; inset:0;
-  background: rgba(255, 240, 246, 0.5);
+  background: rgba(255, 240, 246, 0.65);
   z-index: 0;
 }
 .card.modal-foto7 * { position: relative; z-index: 1; }
@@ -232,7 +231,7 @@ body{
 
   <div class="menu-card foto7-bg" onclick="openModal('modSorpresa')">
     <div class="card-icon-wrap"></div>
-    <div class="card-text emoji-title">Sorpresa 🍿</div>
+    <div class="card-text">Sorpresa</div>
   </div>
 
 </div>
@@ -241,7 +240,7 @@ body{
   <div class="card modal-foto7">
     <p class="card-subtitle" style="color: #400010;">— Una Sorpresa Para Ti —</p>
     <p class="card-main" style="color: #500015;">¡Sorpresa! 🍿</p>
-    <p class="card-body" style="color: #5a0a20; font-weight: bold; background: rgba(255,255,255,0.4); border-radius: 16px; padding: 12px;">
+    <p class="card-body" style="color: #5a0a20; font-weight: bold; background: rgba(255,255,255,0.5); border-radius: 16px; padding: 12px;">
       Tus abrazos son mi parte favorita<br>
       de ver películas juntos.<br>
       ¡Te amo muchísimo!🤍

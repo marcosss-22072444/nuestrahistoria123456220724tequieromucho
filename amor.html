@@ -90,13 +90,13 @@ body{
   font-size: 4.2rem;
 }
 
-/* Fondo con la imagen foto7.png para el nuevo cuadrado */
+/* Forzamos el tamaño y el fondo con la imagen foto7.png para el nuevo cuadrado */
 .menu-card.foto7-bg {
-  background-image: url('foto7.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  position: relative;
+  background-image: url('foto7.png') !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  position: relative !important;
 }
 
 /* Filtro sutil para asegurar que las letras rosas se lean perfectamente sobre tu foto */
@@ -105,7 +105,7 @@ body{
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: linear-gradient(to top, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 50%);
+  background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 50%);
   z-index: 1;
 }
 
@@ -211,106 +211,4 @@ body{
   </div>
 
   <div class="menu-card" onclick="openModal('modCarta')">
-    <div class="card-icon-wrap"><span class="card-emoji">📜</span></div>
-    <div class="card-text">Carta para ti</div>
-  </div>
-
-  <div class="menu-card foto7-bg" onclick="openModal('modSorpresa')">
-    <div class="card-icon-wrap"></div>
-    <div class="card-text">Sorpresa</div>
-  </div>
-
-</div>
-
-<div class="overlay" id="modSorpresa">
-  <div class="card">
-    <p class="card-main">Sorpresa</p>
-    <p class="card-body">Aquí va el contenido de tu sorpresa.</p>
-    <button class="close-btn" onclick="closeModal('modSorpresa')">Cerrar</button>
-  </div>
-</div>
-
-<div class="overlay" id="modOriginal">
-  <div class="card">
-    <div class="card-top-heart">
-      <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="hg" cx="38%" cy="28%" r="65%">
-            <stop offset="0%"  stop-color="#ff7aa0"/><stop offset="30%" stop-color="#e8184e"/><stop offset="65%" stop-color="#c00038"/><stop offset="100%" stop-color="#800020"/>
-          </radialGradient>
-        </defs>
-        <path d="M50 82 C50 82 8 52 8 28 C8 14 18 5 30 5 C38 5 45 10 50 17 C55 10 62 5 70 5 C82 5 92 14 92 28 C92 52 50 82 50 82Z" fill="url(#hg)"/>
-      </svg>
-    </div>
-    <p class="card-subtitle">— Para ti —</p>
-    <p class="card-main">Para la mejor persona<br>de mi vida</p>
-    <p class="card-body">Cada día a tu lado es el más bonito de todos. Eres mi lugar favorito, mi calma, mi todo.</p>
-    <span class="card-love">Te amo amor mio 🤍</span>
-    <button class="close-btn" onclick="closeModal('modOriginal')">Cerrar 🤍</button>
-  </div>
-</div>
-
-<div class="overlay" id="mod1"><div class="card"><p class="card-main">Nuestra primera foto</p><button class="close-btn" onclick="closeModal('mod1')">Cerrar</button></div></div>
-<div class="overlay" id="mod2"><div class="card"><p class="card-main">Nuestra historia (fotos)</p><button class="close-btn" onclick="closeModal('mod2')">Cerrar</button></div></div>
-<div class="overlay" id="mod3"><div class="card"><p class="card-main">Nuestra historia (libro)</p><button class="close-btn" onclick="closeModal('mod3')">Cerrar</button></div></div>
-<div class="overlay" id="modJordan"><div class="card"><p class="card-main">Las jordan</p><button class="close-btn" onclick="closeModal('modJordan')">Cerrar</button></div></div>
-<div class="overlay" id="modCarta"><div class="card"><p class="card-main">Carta para ti</p><button class="close-btn" onclick="closeModal('modCarta')">Cerrar</button></div></div>
-
-<script>
-/* ── floating bg hearts ── */
-const fhEl=document.getElementById('fh');
-for(let i=0;i<30;i++){
-  const s=document.createElement('span'); s.textContent='🤍';
-  s.style.cssText=`left:${Math.random()*100}vw;font-size:${0.7+Math.random()*1.1}rem;animation-duration:${8+Math.random()*9}s;animation-delay:${Math.random()*14}s`;
-  fhEl.appendChild(s);
-}
-
-/* ── Canvas (Ramo) ── */
-const cv=document.getElementById('c'); const cx=cv.getContext('2d'); const W=cv.width, H=cv.height; const T0=performance.now(), DUR=3600;
-function cl(v,a,b){return Math.max(a,Math.min(b,v));}
-function eio(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;}
-function sl(t,a,b){return eio(cl((t-a)/(b-a),0,1));}
-
-function rose(ox,oy,R,p){
-  if(p<=0)return; cx.save();cx.translate(ox,oy);
-  const layers=[{n:8,off:0,dist:R*.78,pw:R*.48,ph:R*.95,t:.0,h:348,lb:40},{n:7,off:Math.PI/8,dist:R*.6,pw:R*.42,ph:R*.78,t:.18,h:350,lb:45},{n:6,off:0,dist:R*.44,pw:R*.35,ph:R*.62,t:.36,h:352,lb:50},{n:5,off:Math.PI/6,dist:R*.29,pw:R*.28,ph:R*.47,t:.54,h:354,lb:55}];
-  layers.forEach(({n,off,dist,pw,ph,t,h,lb})=>{
-    const lp=cl((p-t)/(1-t),0,1); if(lp<=0)return;
-    for(let i=0;i<n;i++){
-      const angle=off+(i/n)*Math.PI*2; cx.save(); cx.rotate(angle); cx.scale(lp,lp);
-      const g=cx.createLinearGradient(0,0,0,-ph); g.addColorStop(0,`hsl(${h},100%,${lb-8}%)`);g.addColorStop(.28,`hsl(${h},100%,${lb+10}%)`);g.addColorStop(.65,`hsl(${h},100%,${lb-2}%)`);g.addColorStop(1,`hsl(${h},100%,${lb-22}%)`);
-      cx.beginPath(); cx.moveTo(0,0); cx.bezierCurveTo(-pw*.9,-ph*.22,-pw*.88,-ph*.7,-pw*.18,-ph*.97); cx.bezierCurveTo(-pw*.06,-ph*1.05,pw*.06,-ph*1.05,pw*.18,-ph*.97); cx.bezierCurveTo(pw*.88,-ph*.7,pw*.9,-ph*.22,0,0); cx.fillStyle=g; cx.fill(); cx.restore();
-    }
-  });
-  cx.restore();
-}
-function stem(x1,y1,cpx,cpy,x2,y2,p,w){
-  if(p<=0)return; const steps=40, pts=[]; for(let i=0;i<=steps;i++){ const t2=i/steps; const mt=1-t2; pts.push([mt*mt*x1+2*mt*t2*cpx+t2*t2*x2, mt*mt*y1+2*mt*t2*cpy+t2*t2*y2]); }
-  const drawn=Math.floor(p*steps); const sg=cx.createLinearGradient(x1,y1,x2,y2); sg.addColorStop(0,'#357a25');sg.addColorStop(1,'#2d6820'); cx.save();cx.strokeStyle=sg;cx.lineWidth=w||4;cx.lineCap='round';cx.beginPath();cx.moveTo(pts[0][0],pts[0][1]); for(let i=1;i<=drawn;i++) cx.lineTo(pts[i][0],pts[i][1]); cx.stroke();cx.restore();
-}
-function leaf(ax,ay,bx,by,side,p){
-  if(p<=0)return; const mx=(ax+bx)/2, my=(ay+by)/2; const dx=bx-ax, dy=by-ay, len=Math.sqrt(dx*dx+dy*dy); const bulge=len*.38*p*side; const nx=-dy/len*bulge, ny=dx/len*bulge; cx.save();cx.globalAlpha=cl(p*2,0,1); const g=cx.createLinearGradient(ax,ay,bx,by); g.addColorStop(0,'#2a6c1e');g.addColorStop(1,'#1e5416'); cx.beginPath();cx.moveTo(ax,ay); cx.quadraticCurveTo(mx+nx,my+ny,bx,by); cx.quadraticCurveTo(mx-nx*.2,my-ny*.2,ax,ay); cx.fillStyle=g;cx.fill(); cx.restore();
-}
-function wrap(p){
-  if(p<=0)return; cx.save();cx.globalAlpha=p; const MX=200, TOP=290, BOT=536, TW=130, BW=14; function ex(side,t){ return MX+side*(TW+(BW-TW)*t*t); } function ey(t){ return TOP+(BOT-TOP)*t; }
-  cx.beginPath(); const fg=cx.createLinearGradient(MX-TW,TOP,MX+TW,BOT); fg.addColorStop(0,'rgba(255,252,254,0.99)'); fg.addColorStop(1,'rgba(248,218,234,0.95)'); cx.fillStyle=fg; cx.restore();
-}
-
-function frame(now){
-  const t=cl((now-T0)/DUR,0,1); cx.clearRect(0,0,W,H);
-  const wP=sl(t,0,.3); const s1P=sl(t,.08,.42); const lP=sl(t,.32,.6); const r1P=sl(t,.42,.92);
-  wrap(wP); stem(200,420,196,320,182,188,s1P,5.5); leaf(175,306,150,276,1,lP); rose(182,175,43,r1P);
-  if(t<1) requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
-
-/* ── MODALES INTERACCION ── */
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-document.querySelectorAll('.overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => { if(e.target === overlay) overlay.classList.remove('open'); });
-});
-</script>
-</body>
-</html>
+    <div class="card-icon-wrap"><span class="card-emoji">📜</span>

@@ -16,6 +16,12 @@
             color: white; 
             min-height: 100vh;
             overflow-x: hidden;
+            transition: opacity 0.6s ease-out; /* Permite el desvanecimiento suave */
+        }
+
+        /* Clase que aplicaremos para el efecto de desaparición suave */
+        .fade-out {
+            opacity: 0;
         }
 
         .seccion {
@@ -131,7 +137,7 @@
     <div id="capa3-galeria" class="seccion" style="justify-content: flex-start;">
         <h1>🤍 Nuestra Historia 🤍</h1>
         <div class="galeria">
-            <figure onclick="ir('https://photos.app.goo.gl/DKeySBjuzfcf59fYA')">
+            <figure onclick="irNuevaPestana('https://photos.app.goo.gl/DKeySBjuzfcf59fYA')">
                 <img src="foto1.jpg"><figcaption>Nuestra primera foto</figcaption>
             </figure>
             <figure onclick="corazon(event)">
@@ -140,16 +146,16 @@
             <figure onclick="corazon(event)">
                 <img src="foto3.png"><figcaption>Nuestra historia (libro)</figcaption>
             </figure>
-            <figure onclick="ir('amor.html')">
+            <figure onclick="irNuevaPestana('amor.html')">
                 <img src="foto4.png"><figcaption>para ti amor mio</figcaption>
             </figure>
-            <figure onclick="ir('https://marcosss-22072444.github.io/Lasjordanmiamorteamoojaladurarparasiempre/')">
+            <figure onclick="irNuevaPestana('https://marcosss-22072444.github.io/Lasjordanmiamorteamoojaladurarparasiempre/')">
                 <img src="foto5.png"><figcaption>Las jordan</figcaption>
             </figure>
-            <figure onclick="ir('carta-para-ti.html')">
+            <figure onclick="irNuevaPestana('carta-para-ti.html')">
                 <img src="foto6.png"><figcaption>Carta para ti</figcaption>
             </figure>
-            <figure onclick="ir('sorpresa.html')">
+            <figure onclick="irSuaveSorpresa(event, 'sorpresa.html')">
                 <img src="foto7.png"><figcaption>Sorpresa</figcaption>
             </figure>
             <figure onclick="corazon(event)">
@@ -207,7 +213,19 @@
             window.scrollTo(0,0);
         }
 
-        function ir(url) { window.location.href = url; }
+        // Abre los enlaces en una pestaña nueva para mantener la música viva
+        function irNuevaPestana(url) { 
+            window.open(url, '_blank'); 
+        }
+
+        // Función especial: Transición suave hacia la sorpresa (en la misma pestaña)
+        function irSuaveSorpresa(e, url) {
+            corazon(e); // Lanza el corazón blanco primero
+            document.body.classList.add('fade-out'); // Aplica el desvanecimiento rosa suave
+            setTimeout(() => {
+                window.location.href = url; // Cambia de página tras terminar la animación (0.6s)
+            }, 600);
+        }
 
         function corazon(e) {
             const h = document.createElement('div');

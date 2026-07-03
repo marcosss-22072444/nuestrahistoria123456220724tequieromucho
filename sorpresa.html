@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Atrás Sorpresa 🤍</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+        body { 
+            background-color: #e6699c; 
+            text-align: center; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0;
+            padding: 0;
+            color: white; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 10px; font-weight: 600; }
+        p { font-size: 1.1rem; font-weight: 300; margin-bottom: 30px; }
+
+        .contador {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .caja {
+            background: white;
+            color: #e6699c;
+            padding: 15px 20px;
+            border-radius: 20px;
+            min-width: 70px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .numero { font-size: 2rem; font-weight: 600; display: block; }
+        .etiqueta { font-size: 0.8rem; text-transform: uppercase; font-weight: 300; }
+
+        /* Estilo para cuando aparezca el PDF */
+        .contenedor-pdf {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            height: 80vh;
+            border-radius: 25px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .btn-volver {
+            margin-top: 30px;
+            padding: 12px 25px;
+            background-color: white;
+            color: #e6699c;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: fly 0.8s linear forwards;
+            font-size: 30px;
+            z-index: 9999;
+        }
+
+        @keyframes fly {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -150px) scale(2); }
+        }
+    </style>
+</head>
+<body onclick="corazon(event)">
+
+    <div id="bloque-espera">
+        <h1>🤍 Falta muy poco... 🤍</h1>
+        <p>Esta sorpresa se abrirá automáticamente el 29 de Julio a las 4:00 PM</p>
+        
+        <div class="contador">
+            <div class="caja"><span class="numero" id="dias">00</span><span class="etiqueta">Días</span></div>
+            <div class="caja"><span class="numero" id="horas">00</span><span class="etiqueta">Horas</span></div>
+            <div class="caja"><span class="numero" id="mins">00</span><span class="etiqueta">Min</span></div>
+            <div class="caja"><span class="numero" id="segs">00</span><span class="etiqueta">Seg</span></div>
+        </div>
+    </div>
+
+    <div id="bloque-desbloqueado" class="contenedor-pdf">
+        <iframe src="mi-sorpresa.pdf"></iframe>
+    </div>
+
+    <a href="index.html" class="btn-volver">← Volver a nuestra historia</a>
+
+    <script>
+        // Configura aquí la fecha de desbloqueo: Año, Mes (0-11, Julio es 6), Día, Hora, Minutos, Segundos
+        // Nota: En Javascript los meses van de 0 a 11 (0=Enero, 6=Julio)
+        const fechaObjetivo = new Date(2026, 6, 29, 16, 0, 0).getTime();
+
+        const x = setInterval(function() {
+            const ahora = new Date().getTime();
+            const distancia = fechaObjetivo - ahora;
+
+            // Cálculos de tiempo
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+            // Mostrar los números en pantalla
+            document.getElementById("dias").innerHTML = dias < 10 ? "0" + dias : dias;
+            document.getElementById("horas").innerHTML = horas < 10 ? "0" + horas : horas;
+            document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutos;
+            document.getElementById("segs").innerHTML = segundos < 10 ? "0" + segundos : segundos;
+
+            // Si la cuenta atrás termina
+            if (distancia < 0) {
+                clearInterval(x);
+                document.getElementById("bloque-espera").style.display = "none";
+                document.getElementById("bloque-desbloqueado").style.display = "block";
+            }
+        }, 1000);
+
+        function corazon(e) {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.innerHTML = '🤍';
+            const x = e.pageX || (e.touches ? e.touches[0].pageX : 0);
+            const y = e.pageY || (e.touches ? e.touches[0].pageY : 0);
+            h.style.left = x + 'px';
+            h.style.top = y + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 800);
+        }
+    </script>
+</body>
+</html>

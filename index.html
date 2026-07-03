@@ -16,12 +16,6 @@
             color: white; 
             min-height: 100vh;
             overflow-x: hidden;
-            transition: opacity 0.6s ease-out; /* Permite el desvanecimiento suave */
-        }
-
-        /* Clase que aplicaremos para el efecto de desaparición suave */
-        .fade-out {
-            opacity: 0;
         }
 
         .seccion {
@@ -155,7 +149,7 @@
             <figure onclick="irNuevaPestana('carta-para-ti.html')">
                 <img src="foto6.png"><figcaption>Carta para ti</figcaption>
             </figure>
-            <figure onclick="irSuaveSorpresa(event, 'sorpresa.html')">
+            <figure onclick="irNuevaPestana('sorpresa.html')">
                 <img src="foto7.png"><figcaption>Sorpresa</figcaption>
             </figure>
             <figure onclick="corazon(event)">
@@ -213,18 +207,8 @@
             window.scrollTo(0,0);
         }
 
-        // Abre los enlaces en una pestaña nueva para mantener la música viva
         function irNuevaPestana(url) { 
             window.open(url, '_blank'); 
-        }
-
-        // Función especial: Transición suave hacia la sorpresa (en la misma pestaña)
-        function irSuaveSorpresa(e, url) {
-            corazon(e); // Lanza el corazón blanco primero
-            document.body.classList.add('fade-out'); // Aplica el desvanecimiento rosa suave
-            setTimeout(() => {
-                window.location.href = url; // Cambia de página tras terminar la animación (0.6s)
-            }, 600);
         }
 
         function corazon(e) {

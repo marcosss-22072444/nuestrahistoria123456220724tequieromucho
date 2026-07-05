@@ -197,13 +197,12 @@
         </div>
     </div>
 
-    <form id="formspree-form" action="https://formspree.io/f/TU_CODIGO_DE_FORMSPREE_AQUI" method="POST" style="display: none;">
+    <form id="formspree-form" action="https://formspree.io/f/TU_ID" method="POST" style="display: none;">
         <input type="text" name="cupon_canjeado" id="input-cupon">
         <input type="email" name="_replyto" value="arroyolopezmarcos09@gmail.com">
     </form>
 
     <script>
-        // Al cargar la página, comprueba qué cupones ya han sido agotados en su móvil
         document.addEventListener("DOMContentLoaded", () => {
             const cards = document.querySelectorAll('.cupon-card');
             cards.forEach(card => {
@@ -221,7 +220,7 @@
 
             if (confirm(`¿Estás segura de que quieres canjear: "${nombreCupon}"? 🤍`)) {
                 
-                // 1. Lo guarda para siempre en su navegador como Agotado
+                // 1. Lo guarda en el navegador local
                 localStorage.setItem(idCupon, "agotado");
                 
                 const card = document.getElementById(idCupon);
@@ -230,7 +229,7 @@
                 btn.disabled = true;
                 btn.innerText = "Agotado";
 
-                // 2. Prepara y envía la alerta invisible a tu correo
+                // 2. Envía la alerta a Formspree
                 const form = document.getElementById('formspree-form');
                 const input = document.getElementById('input-cupon');
                 
@@ -246,7 +245,7 @@
                     if (response.ok) {
                         alert("¡Cupón canjeado! A Marcos ya le ha llegado el correo. 🤍");
                     } else {
-                        alert("Cupón marcado como usado, pero hubo un error enviando la notificación.");
+                        alert("Cupón marcado como usado localmente, pero comprueba la ID de Formspree.");
                     }
                 }).catch(error => {
                     alert("Cupón marcado como usado, pero no hay conexión a internet para mandar el aviso.");

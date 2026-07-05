@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Cupones 🤍</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
         body { 
             background-color: #e6699c; 
@@ -137,7 +137,31 @@
             white-space: nowrap;
         }
 
-        @media (max-width: 600px) { .cupon-card { width: 90%; } }
+        /* ESTILO DEL BOTÓN DE VOLVER ABAJO */
+        .btn-volver-galeria {
+            margin-top: 40px;
+            padding: 14px 35px;
+            background-color: white;
+            color: #e6699c;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .btn-volver-galeria:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) { 
+            .cupon-card { width: 90%; } 
+            .btn-volver-galeria { width: 80%; max-width: 280px; }
+        }
     </style>
 </head>
 <body>
@@ -183,7 +207,7 @@
             </div>
 
             <div class="cupon-card" id="vale-masaje">
-                <h3>Vale por un masaje 💆‍♀️</h3>
+                <h3>Vale por un masahe 💆‍♀️</h3>
                 <p>10 minutos de desconexión total para que te relajes al máximo.</p>
                 <button class="btn-romantico" onclick="canjear('vale-masaje', 'Vale por un masaje relajante 💆‍♀️')">Cargando...</button>
             </div>
@@ -194,9 +218,10 @@
                 <button class="btn-romantico" onclick="canjear('vale-cocinar', 'Vale porque yo cocino hoy 👨‍🍳')">Cargando...</button>
             </div>
         </div>
+
+        <a href="javascript:void(0);" onclick="cerrarVentana()" class="btn-volver-galeria">← Volver a nuestra historia</a>
     </div>
 
-    <!-- Tu formulario enlazado con tu ID real de Formspree -->
     <form id="formspree-form" action="https://formspree.io/f/mgojdkdl" method="POST" style="display: none;">
         <input type="text" name="cupon_canjeado" id="input-cupon">
         <input type="email" name="_replyto" value="arroyolopezmarcos09@gmail.com">
@@ -289,6 +314,15 @@
                     alert("Cupón marcado como usado, pero hubo un error enviando el aviso por correo.");
                 });
             }
+        }
+
+        // FUNCIÓN DEL BOTÓN CON CIERRE SEGURO AUTOMÁTICO
+        function cerrarVentana() {
+            window.close();
+            
+            setTimeout(function() {
+                window.location.href = 'index.html'; 
+            }, 100);
         }
     </script>
 </body>

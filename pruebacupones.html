@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Cupones 🤍</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=300;600&display=swap');
 
         body { 
             background-color: #e6699c; 
@@ -99,7 +99,6 @@
             background-color: #d15284;
         }
 
-        /* Estado Agotado exacto */
         .cupon-card.agotado {
             background-color: #f2f2f2;
             box-shadow: none !important;
@@ -220,7 +219,6 @@
 
             if (confirm(`¿Estás segura de que quieres canjear: "${nombreCupon}"? 🤍`)) {
                 
-                // 1. Lo guarda en el navegador local
                 localStorage.setItem(idCupon, "agotado");
                 
                 const card = document.getElementById(idCupon);
@@ -229,7 +227,6 @@
                 btn.disabled = true;
                 btn.innerText = "Agotado";
 
-                // 2. Envía la alerta a Formspree
                 const form = document.getElementById('formspree-form');
                 const input = document.getElementById('input-cupon');
                 

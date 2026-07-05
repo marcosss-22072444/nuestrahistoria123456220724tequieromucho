@@ -86,6 +86,28 @@
             0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
             100% { opacity: 0; transform: translate(-50%, -150px) scale(2); }
         }
+
+        /* --- AJUSTES ADAPTABLES PARA MÓVILES --- */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            p { font-size: 1rem; padding: 0 10px; }
+            
+            .contador {
+                gap: 8px; /* Reduce la separación en pantallas pequeñas */
+            }
+            
+            .caja {
+                padding: 10px 12px; /* Cajas un poco más pequeñas para que no se corten */
+                min-width: 55px;
+            }
+            
+            .numero { font-size: 1.5rem; }
+            .etiqueta { font-size: 0.7rem; }
+            
+            .contenedor-pdf {
+                height: 70vh; /* Ajusta la altura del PDF para que quepa bien en el móvil */
+            }
+        }
     </style>
 </head>
 <body onclick="corazon(event)">
@@ -122,7 +144,7 @@
 
             document.getElementById("dias").innerHTML = dias < 10 ? "0" + dias : dias;
             document.getElementById("horas").innerHTML = horas < 10 ? "0" + horas : horas;
-            document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutes;
+            document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutos;
             document.getElementById("segs").innerHTML = segundos < 10 ? "0" + segundos : segundos;
 
             if (distancia < 0) {

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para ti 🤍</title>
 <style>
+/* --- ACTUALIZADO: IMPORTACIÓN DE FUENTES DE LA PÁGINA PRINCIPAL --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -15,9 +17,11 @@ body{
     radial-gradient(ellipse at 75% 80%, rgba(255,180,210,0.7) 0%, transparent 50%),
     linear-gradient(160deg, #fce4ef 0%, #f8cce0 40%, #f5b8d4 100%);
   display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  overflow:hidden; font-family:'Dancing Script',cursive;
-  gap: 18px;
+  align-items:center; justify-content: flex-start; /* Ajustado para mejor distribución móvil */
+  padding-top: 2vh; /* Margen superior sutil */
+  padding-bottom: 30px;
+  overflow-x:hidden; font-family:'Poppins', sans-serif; /* ACTUALIZADO: FUENTE PRINCIPAL */
+  gap: 15px;
 }
 
 /* floating hearts */
@@ -32,7 +36,7 @@ body{
 
 /* stage */
 .stage{position:relative;z-index:2;cursor:pointer;user-select:none;
-  transition:transform .25s; margin-top: 10px;}
+  transition:transform .25s; margin-top: 5px;}
 .stage:hover{transform:scale(1.015);}
 .stage:active{transform:scale(0.98);}
 
@@ -44,8 +48,8 @@ body{
   color:#fff;
   border:none; border-radius:50px;
   padding: 14px 32px;
-  font-family:'Dancing Script',cursive;
-  font-size:1.5rem; font-weight:700;
+  font-family:'Poppins', sans-serif; /* ACTUALIZADO: FUENTE DEL BOTÓN */
+  font-size:1.5rem; font-weight:600; /* Ajustado peso de fuente */
   cursor:pointer;
   box-shadow:
     0 6px 24px rgba(200,0,70,0.45),
@@ -67,6 +71,29 @@ body{
 }
 .btn-heart{font-size:1.3rem; animation:btnHeart 1.5s ease-in-out infinite;}
 @keyframes btnHeart{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+
+/* ── BOTÓN VOLVER INCLUIDO EN ESTILOS ── */
+.btn-volver-galeria {
+  position: relative;
+  z-index: 3;
+  margin-top: 10px;
+  padding: 12px 35px;
+  background-color: white;
+  color: #e0195a;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  font-family:'Poppins', sans-serif; /* ACTUALIZADO: FUENTE DEL BOTÓN */
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(200,0,70,0.15);
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-volver-galeria:active {
+  transform: scale(0.95);
+}
 
 /* MODAL */
 .overlay{
@@ -110,21 +137,27 @@ body{
   filter:drop-shadow(0 4px 12px rgba(180,0,60,0.45));
 }
 @keyframes topHeart{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
-.card-subtitle{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+.card-subtitle{font-family:'Poppins',serif; /* ACTUALIZADO: FUENTE DEL SUBTÍTULO */ font-style:italic;font-weight:600;
   color:#c06080;font-size:1.05rem;letter-spacing:.08em;margin-bottom:.5rem;}
-.card-main{font-size:2rem;font-weight:700;color:#880038;line-height:1.45;margin:.6rem 0 .9rem;}
-.card-body{font-size:1.22rem;color:#a03a60;line-height:1.7;margin-bottom:1.3rem;}
-.card-love{font-size:2.2rem;font-weight:700;color:#b8003a;display:block;margin-bottom:1.5rem;}
+.card-main{font-family:'Poppins', sans-serif; /* ACTUALIZADO: FUENTE DEL TÍTULO PRINCIPAL */ font-size:2rem;font-weight:700;color:#880038;line-height:1.45;margin:.6rem 0 .9rem;}
+.card-body{font-family:'Poppins', sans-serif; /* ACTUALIZADO: FUENTE DEL CUERPO */ font-size:1.22rem;color:#a03a60;line-height:1.7;margin-bottom:1.3rem;}
+.card-love{font-family:'Poppins', sans-serif; /* ACTUALIZADO: FUENTE DEL TEXTO DE AMOR */ font-size:2.2rem;font-weight:700;color:#b8003a;display:block;margin-bottom:1.5rem;}
 .card-hearts{font-size:1.6rem;letter-spacing:.4rem;margin-bottom:1.6rem;display:block;}
 .sp{position:absolute;animation:spFloat 2.2s ease-in-out infinite;}
 @keyframes spFloat{0%,100%{transform:scale(1) rotate(0deg);opacity:.65}50%{transform:scale(1.35) rotate(14deg);opacity:1}}
 .close-btn{
   background:linear-gradient(135deg,#f04070,#aa0030);color:#fff;
   border:none;border-radius:40px;padding:.65rem 2.2rem;
-  font-family:'Dancing Script',cursive;font-size:1.2rem;font-weight:700;cursor:pointer;
+  font-family:'Poppins',cursive; /* ACTUALIZADO: FUENTE DEL BOTÓN DE CERRAR */ font-size:1.2rem;font-weight:700;cursor:pointer;
   box-shadow:0 5px 18px rgba(170,0,50,.4);transition:transform .2s,box-shadow .2s;
 }
 .close-btn:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 8px 24px rgba(170,0,50,.5);}
+
+@media (max-width: 600px) {
+  .btn-volver-galeria { width: 80%; max-width: 260px; font-size: 1rem; }
+  .tap-btn { padding: 12px 28px; font-size: 1.3rem; }
+  .stage { transform: scale(0.9); margin-top: -15px; margin-bottom: -15px; }
+}
 </style>
 </head>
 <body>
@@ -141,7 +174,8 @@ body{
   <span class="btn-heart" style="animation-delay:.75s">🤍</span>
 </button>
 
-<!-- MODAL -->
+<a href="javascript:void(0);" onclick="cerrarVentana()" class="btn-volver-galeria">← Volver a nuestra historia</a>
+
 <div class="overlay" id="overlay">
   <div class="card">
     <span class="sp" style="top:14px;left:18px;font-size:1rem;animation-delay:0s">🤍</span>
@@ -202,19 +236,11 @@ function cl(v,a,b){return Math.max(a,Math.min(b,v));}
 function eio(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;}
 function sl(t,a,b){return eio(cl((t-a)/(b-a),0,1));}
 
-/* ═══════════════════════════════
-   ROSE — clean, ordered petals
-   Each petal pivots from flower centre.
-   We keep transform-origin at (0,0) = flower centre,
-   rotate to angle, then draw the petal shape upward.
-═══════════════════════════════ */
 function rose(ox,oy,R,p){
   if(p<=0)return;
   cx.save();cx.translate(ox,oy);
 
-  /* layers: outermost first so inner ones paint on top */
   const layers=[
-    // {count, angleOffset, dist, petalW, petalH, startT, hue, lightBase}
     {n:8, off:0,           dist:R*.78, pw:R*.48, ph:R*.95, t:.00, h:348, lb:40},
     {n:7, off:Math.PI/8,   dist:R*.60, pw:R*.42, ph:R*.78, t:.18, h:350, lb:45},
     {n:6, off:0,           dist:R*.44, pw:R*.35, ph:R*.62, t:.36, h:352, lb:50},
@@ -229,29 +255,22 @@ function rose(ox,oy,R,p){
       const angle=off+(i/n)*Math.PI*2;
 
       cx.save();
-      cx.rotate(angle);                    // point petal in its direction
-      cx.scale(lp,lp);                     // bloom scale
+      cx.rotate(angle);                    
+      cx.scale(lp,lp);                     
 
-      /* gradient along petal length (bottom=base, top=tip) */
       const g=cx.createLinearGradient(0,0, 0,-ph);
-      g.addColorStop(0,  `hsl(${h},100%,${lb-8}%)`);  // base: rich dark
-      g.addColorStop(.28,`hsl(${h},100%,${lb+10}%)`); // mid: bright
-      g.addColorStop(.65,`hsl(${h},100%,${lb-2}%)`);  // upper: deepen
-      g.addColorStop(1,  `hsl(${h},100%,${lb-22}%)`); // tip: very dark
+      g.addColorStop(0,  `hsl(${h},100%,${lb-8}%)`);  
+      g.addColorStop(.28,`hsl(${h},100%,${lb+10}%)`); 
+      g.addColorStop(.65,`hsl(${h},100%,${lb-2}%)`);  
+      g.addColorStop(1,  `hsl(${h},100%,${lb-22}%)`); 
 
-      /* petal shape — base at origin, tip at (0, -ph)
-         Uses mirror symmetry so it's always clean */
       cx.beginPath();
       cx.moveTo(0,0);
-      // left side up
       cx.bezierCurveTo(-pw*.9,-ph*.22, -pw*.88,-ph*.7, -pw*.18,-ph*.97);
-      // tip curve
       cx.bezierCurveTo(-pw*.06,-ph*1.05, pw*.06,-ph*1.05, pw*.18,-ph*.97);
-      // right side down
       cx.bezierCurveTo(pw*.88,-ph*.7, pw*.9,-ph*.22, 0,0);
       cx.fillStyle=g; cx.fill();
 
-      /* silky sheen on left half */
       const sh=cx.createLinearGradient(-pw*.6,-ph*.5, pw*.1,-ph*.1);
       sh.addColorStop(0,'rgba(255,210,220,.3)');
       sh.addColorStop(1,'rgba(255,210,220,0)');
@@ -262,7 +281,6 @@ function rose(ox,oy,R,p){
       cx.bezierCurveTo(pw*.88,-ph*.7,pw*.9,-ph*.22,0,0);
       cx.fillStyle=sh; cx.fill();
 
-      /* centre vein */
       cx.beginPath();cx.moveTo(0,-1);cx.lineTo(0,-ph*.88);
       cx.strokeStyle='rgba(80,0,10,.18)';cx.lineWidth=.8;cx.stroke();
 
@@ -270,7 +288,6 @@ function rose(ox,oy,R,p){
     }
   });
 
-  /* Centre bud */
   const bp=cl((p-.7)/.3,0,1);
   if(bp>0){
     const bg=cx.createRadialGradient(-R*.06,-R*.06,0,0,0,R*.24*bp);
@@ -280,17 +297,15 @@ function rose(ox,oy,R,p){
     bg.addColorStop(1, 'hsl(356,100%,13%)');
     cx.beginPath();cx.arc(0,0,R*.24*bp,0,Math.PI*2);
     cx.fillStyle=bg;cx.fill();
-    /* tiny specular */
     cx.beginPath();cx.arc(-R*.06,-R*.06,R*.07*bp,0,Math.PI*2);
     cx.fillStyle='rgba(255,200,210,.35)';cx.fill();
   }
   cx.restore();
 }
 
-/* ── STEM (smooth bezier) ── */
+/* ── STEM ── */
 function stem(x1,y1,cpx,cpy,x2,y2,p,w){
   if(p<=0)return;
-  /* sample the bezier at p */
   const steps=40, pts=[];
   for(let i=0;i<=steps;i++){
     const t2=i/steps;
@@ -333,30 +348,23 @@ function leaf(ax,ay,bx,by,side,p){
   cx.restore();
 }
 
-/* ═══════════════════════════════════════
-   PAPER WRAP — realistic florist cone
-   Drawn as overlapping folded panels
-═══════════════════════════════════════ */
+/* ── PAPER WRAP ── */
 function wrap(p){
   if(p<=0)return;
   cx.save();cx.globalAlpha=p;
 
-  /* Bouquet stems sit around x=200, y≈360.
-     Paper cone: wide opening at top, tapers to rounded bottom. */
-  const MX=200; // centre x
-  const TOP=290; // top edge of paper — raised to cover more stems/flowers
-  const BOT=536; // bottom tip
-  const TW=130;  // half-width at top — wider to hug the bouquet
-  const BW=14;   // half-width at bottom (rounded point)
+  const MX=200; 
+  const TOP=290; 
+  const BOT=536; 
+  const TW=130;  
+  const BW=14;   
 
-  /* Helper: x on left/right edge at progress t (0=top,1=bottom) */
-  function ex(side,t){ // side: -1 left, +1 right
-    const hw=TW+(BW-TW)*t*t; // quadratic taper
+  function ex(side,t){ 
+    const hw=TW+(BW-TW)*t*t; 
     return MX+side*hw;
   }
   function ey(t){ return TOP+(BOT-TOP)*t; }
 
-  /* ── Drop shadow ── */
   cx.save();cx.shadowColor='rgba(140,0,50,0.18)';cx.shadowBlur=22;cx.shadowOffsetX=8;cx.shadowOffsetY=12;
   cx.beginPath();
   cx.moveTo(ex(-1,0),ey(0));
@@ -366,7 +374,6 @@ function wrap(p){
   for(let t=1;t>=0;t-=.05) cx.lineTo(ex(1,t),ey(t));
   cx.closePath();cx.fillStyle='rgba(0,0,0,.01)';cx.fill();cx.restore();
 
-  /* ── Back panel (slightly wider, darker) ── */
   cx.beginPath();
   cx.moveTo(ex(-1,0)-6,ey(0)+4);
   for(let t=0;t<=1;t+=.05) cx.lineTo(ex(-1,t)-6*(1-t*.8),ey(t));
@@ -380,7 +387,6 @@ function wrap(p){
   bg.addColorStop(1,'rgba(228,185,208,0.88)');
   cx.fillStyle=bg;cx.fill();
 
-  /* ── Main front panel ── */
   cx.beginPath();
   cx.moveTo(ex(-1,0),TOP);
   for(let t=0;t<=1;t+=.04){
@@ -392,7 +398,6 @@ function wrap(p){
   for(let t=1;t>=0;t-=.04) cx.lineTo(ex(1,t),ey(t));
   cx.closePath();
 
-  /* White paper with very faint pink tint */
   const fg=cx.createLinearGradient(MX-TW,TOP,MX+TW,BOT);
   fg.addColorStop(0,  'rgba(255,252,254,0.99)');
   fg.addColorStop(.25,'rgba(255,248,252,0.98)');
@@ -401,7 +406,6 @@ function wrap(p){
   fg.addColorStop(1,  'rgba(248,218,234,0.95)');
   cx.fillStyle=fg;cx.fill();
 
-  /* ── Left folded flap ── */
   cx.beginPath();
   cx.moveTo(ex(-1,0),TOP);
   for(let t=0;t<=1;t+=.04) cx.lineTo(ex(-1,t),ey(t));
@@ -414,7 +418,6 @@ function wrap(p){
   lf.addColorStop(1,'rgba(225,180,205,0.12)');
   cx.fillStyle=lf;cx.fill();
 
-  /* ── Right folded flap ── */
   cx.beginPath();
   cx.moveTo(ex(1,0),TOP);
   for(let t=0;t<=1;t+=.04) cx.lineTo(ex(1,t),ey(t));
@@ -427,7 +430,6 @@ function wrap(p){
   rf.addColorStop(1,'rgba(225,180,205,0.1)');
   cx.fillStyle=rf;cx.fill();
 
-  /* ── Vertical crease lines ── */
   cx.save();cx.strokeStyle='rgba(200,155,180,0.32)';cx.lineWidth=1.2;
   [-.62,-.3,.3,.62].forEach(frac=>{
     const xT=MX+frac*TW, xB=MX+frac*BW*1.5;
@@ -437,19 +439,17 @@ function wrap(p){
     cx.stroke();
   });cx.restore();
 
-  /* ── Top folded edge highlight ── */
   cx.beginPath();
   cx.moveTo(ex(-1,0),TOP);
   cx.bezierCurveTo(MX-TW*.6,TOP-18,MX+TW*.6,TOP-18,ex(1,0),TOP);
   cx.strokeStyle='rgba(245,195,218,0.7)';cx.lineWidth=3;cx.stroke();
-  /* shadow just below top edge */
+  
   cx.beginPath();
   cx.moveTo(ex(-1,0),TOP+3);
   cx.bezierCurveTo(MX-TW*.6,TOP-12,MX+TW*.6,TOP-12,ex(1,0),TOP+3);
   cx.strokeStyle='rgba(195,130,165,0.3)';cx.lineWidth=1.5;cx.stroke();
 
-  /* ── Hearts printed on paper ── */
-  cx.globalAlpha=p*.68;
+  cx.gridAlpha=p*.68;
   const hearts=[
     [120,340,17],[162,368,13],[204,346,16],[244,376,12],
     [98,390,12],[182,392,10],[140,388,11],[266,364,12],
@@ -468,7 +468,6 @@ function ribbon(p){
   cx.save();cx.globalAlpha=p;
   const rx=200, ry=300;
 
-  /* tails — two flowing ribbons */
   [[-1,1],[1,-1]].forEach(([sa,sb])=>{
     const tg=cx.createLinearGradient(rx,ry,rx+sa*45,ry+75);
     tg.addColorStop(0,'#e82a58');tg.addColorStop(.5,'#c01848');tg.addColorStop(1,'#8a0030');
@@ -476,7 +475,6 @@ function ribbon(p){
     cx.beginPath();cx.moveTo(rx+sa*7,ry+5);
     cx.bezierCurveTo(rx+sa*28,ry+30, rx+sa*42,ry+52, rx+sa*38,ry+76);
     cx.stroke();
-    /* ribbon edge highlight */
     cx.strokeStyle='rgba(255,160,185,.3)';cx.lineWidth=3;
     cx.beginPath();cx.moveTo(rx+sa*4,ry+6);
     cx.bezierCurveTo(rx+sa*24,ry+29,rx+sa*36,ry+50,rx+sa*32,ry+74);
@@ -484,7 +482,6 @@ function ribbon(p){
     cx.restore();
   });
 
-  /* bow loops */
   function loop(s){
     cx.save();
     const lg=cx.createRadialGradient(rx+s*24,ry-14,2,rx+s*16,ry-6,52);
@@ -497,12 +494,10 @@ function ribbon(p){
     cx.bezierCurveTo(rx+s*16,ry-5,  rx+s*68,ry-48, rx+s*55,ry-20);
     cx.bezierCurveTo(rx+s*46,ry-4,  rx+s*16,ry-1,  rx,ry);
     cx.fillStyle=lg;cx.fill();
-    /* sheen */
     cx.beginPath();
     cx.moveTo(rx+s*10,ry-2);
     cx.bezierCurveTo(rx+s*24,ry-12,rx+s*54,ry-40,rx+s*44,ry-22);
     cx.strokeStyle='rgba(255,190,210,.45)';cx.lineWidth=3;cx.lineCap='round';cx.stroke();
-    /* crease */
     cx.beginPath();
     cx.moveTo(rx+s*4,ry-1);
     cx.bezierCurveTo(rx+s*18,ry-8,rx+s*46,ry-34,rx+s*36,ry-18);
@@ -511,7 +506,6 @@ function ribbon(p){
   }
   loop(-1); loop(1);
 
-  /* centre heart knot */
   cx.save();cx.translate(rx,ry-7);cx.scale(p*1.1,p*1.1);
   const kg=cx.createRadialGradient(-4,-7,1,0,-2,18);
   kg.addColorStop(0,'#ff90b0');kg.addColorStop(.45,'#d81050');kg.addColorStop(1,'#750020');
@@ -539,19 +533,16 @@ function frame(now){
   const r1P=sl(t,.42,.92); const r2P=sl(t,.45,.94); const r3P=sl(t,.47,.96);
   const r4P=sl(t,.50,.99); const r5P=sl(t,.52,1.0); const r6P=sl(t,.54,1.0); const r7P=sl(t,.44,.93);
 
-  /* paper wrap first */
   wrap(wP);
 
-  /* stems — bezier curves (x1,y1,cpx,cpy,x2,y2) */
-  stem(200,420, 196,320, 182,188, s1P, 5.5);   // centre
-  stem(197,421, 178,330, 130,206, s2P, 4.8);   // mid-left
-  stem(195,422, 165,340, 100,232, s3P, 4.2);   // far-left
-  stem(203,421, 218,328, 244,208, s4P, 4.8);   // mid-right
-  stem(205,422, 230,340, 268,234, s5P, 4.2);   // far-right
-  stem(199,420, 196,328, 190,200, s6P, 4.5);   // inner-left
-  stem(201,420, 206,326, 212,200, s7P, 4.5);   // inner-right
+  stem(200,420, 196,320, 182,188, s1P, 5.5);   
+  stem(197,421, 178,330, 130,206, s2P, 4.8);   
+  stem(195,422, 165,340, 100,232, s3P, 4.2);   
+  stem(203,421, 218,328, 244,208, s4P, 4.8);   
+  stem(205,422, 230,340, 268,234, s5P, 4.2);   
+  stem(199,420, 196,328, 190,200, s6P, 4.5);   
+  stem(201,420, 206,326, 212,200, s7P, 4.5);   
 
-  /* leaves (ax,ay,bx,by,side,p) */
   leaf(175,306, 150,276, 1,  lP);
   leaf(164,318, 140,294, 1,  l2P);
   leaf(216,300, 240,272, -1, lP);
@@ -561,8 +552,7 @@ function frame(now){
   leaf(180,270, 160,250, 1,  l2P);
   leaf(215,272, 232,254, -1, l2P);
 
-  /* roses */
-  rose(182,175, 43, r1P);   // centre — largest
+  rose(182,175, 43, r1P);   
   rose(126,204, 36, r2P);
   rose(240,207, 36, r3P);
   rose( 93,228, 28, r4P);
@@ -570,7 +560,6 @@ function frame(now){
   rose(158,208, 31, r6P);
   rose(206,210, 31, r7P);
 
-  /* ribbon on top */
   ribbon(rbP);
 
   if(t<1) requestAnimationFrame(frame);
@@ -585,6 +574,14 @@ document.getElementById('tapBtn').addEventListener('click',openNote);
 document.getElementById('overlay').addEventListener('click',e=>{
   if(e.target===document.getElementById('overlay'))closeNote();
 });
+
+/* FUNCIÓN INTELIGENTE DE CIERRE / REGRESO */
+function cerrarVentana() {
+  window.close();
+  setTimeout(function() {
+    window.location.href = 'index.html'; 
+  }, 100);
+}
 </script>
 </body>
 </html>

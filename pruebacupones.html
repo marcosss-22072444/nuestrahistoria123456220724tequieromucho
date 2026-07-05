@@ -196,7 +196,8 @@
         </div>
     </div>
 
-    <form id="formspree-form" action="https://formspree.io/f/TU_ID" method="POST" style="display: none;">
+    <!-- Tu formulario enlazado con tu ID real de Formspree -->
+    <form id="formspree-form" action="https://formspree.io/f/mgojdkdl" method="POST" style="display: none;">
         <input type="text" name="cupon_canjeado" id="input-cupon">
         <input type="email" name="_replyto" value="arroyolopezmarcos09@gmail.com">
     </form>
@@ -242,7 +243,7 @@
                     if (response.ok) {
                         alert("¡Cupón canjeado! A Marcos ya le ha llegado el correo. 🤍");
                     } else {
-                        alert("Cupón marcado como usado localmente, pero comprueba la ID de Formspree.");
+                        alert("Cupón marcado como usado localmente, pero hubo un problema enviando la notificación.");
                     }
                 }).catch(error => {
                     alert("Cupón marcado como usado, pero no hay conexión a internet para mandar el aviso.");

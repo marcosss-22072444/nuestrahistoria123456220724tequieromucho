@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
         body { 
-            background-color: #e6699c; 
+            background-color: #e6699c; /* Fondo rosa inicial */
             text-align: center; 
             font-family: 'Poppins', sans-serif; 
             margin: 0;
@@ -21,9 +21,11 @@
             align-items: center;
             box-sizing: border-box;
             padding: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
+            transition: background-color 0.5s ease; /* Transición suave al cambiar a modo cine */
         }
 
+        /* --- ESTILOS CUENTA ATRÁS --- */
         h1 { font-size: 1.8rem; margin-bottom: 10px; font-weight: 600; }
         p { font-size: 1.1rem; font-weight: 300; margin-bottom: 30px; }
 
@@ -46,34 +48,48 @@
         .numero { font-size: 2rem; font-weight: 600; display: block; }
         .etiqueta { font-size: 0.8rem; text-transform: uppercase; font-weight: 300; }
 
+        /* --- ESTILOS CONTENEDOR PDF (IGUAL AL DEL SEVILLA FC) --- */
         .contenedor-pdf {
-            display: none;
+            display: none; /* Oculto al principio */
             width: 100%;
-            max-width: 800px;
-            height: 80vh;
-            border-radius: 25px;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-top: 20px;
+            max-width: 100%;
+            height: 75vh; 
+            max-height: 75vh;
+            justify-content: center;
+            align-items: center;
         }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        .contenedor-pdf iframe {
+            width: 100%;
+            height: 100%;
+            max-width: 600px; /* Ancho ideal de lectura */
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
 
+        /* --- BOTÓN DE VOLVER --- */
         .btn-cerrar {
-            margin-top: 30px;
-            padding: 12px 25px;
-            background-color: white;
+            margin-top: 25px;
+            padding: 14px 35px;
+            background-color: white; /* Blanco al principio para resaltar sobre el rosa */
             color: #e6699c;
             border: none;
             border-radius: 50px;
             font-weight: 600;
+            font-size: 1em;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none; /* Quita el subrayado de enlace */
+            text-decoration: none; 
             display: inline-block;
+            transition: all 0.3s ease;
         }
 
+        .btn-cerrar:active {
+            transform: scale(0.95);
+        }
+
+        /* --- EFECTO CORAZONES --- */
         .heart {
             position: absolute;
             pointer-events: none;
@@ -87,31 +103,39 @@
             100% { opacity: 0; transform: translate(-50%, -150px) scale(2); }
         }
 
-        /* --- AJUSTES ADAPTABLES PARA MÓVILES --- */
-        @media (max-width: 480px) {
+        /* --- ADAPTACIÓN RESPONSIVE --- */
+        @media (min-width: 1024px) {
+            .btn-cerrar.modo-cine:hover {
+                background-color: #f082ae;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            
             h1 { font-size: 1.5rem; }
             p { font-size: 1rem; padding: 0 10px; }
             
-            .contador {
-                gap: 8px; /* Reduce la separación en pantallas pequeñas */
-            }
-            
-            .caja {
-                padding: 10px 12px; /* Cajas un poco más pequeñas para que no se corten */
-                min-width: 55px;
-            }
-            
+            .contador { gap: 8px; }
+            .caja { padding: 10px 12px; min-width: 55px; }
             .numero { font-size: 1.5rem; }
             .etiqueta { font-size: 0.7rem; }
             
-            .contenedor-pdf {
-                height: 70vh; /* Ajusta la altura del PDF para que quepa bien en el móvil */
+            .contenedor-pdf { height: 70vh; max-height: 70vh; }
+            .contenedor-pdf iframe { width: 95%; border-radius: 15px; }
+            
+            .btn-cerrar {
+                width: 80%;
+                max-width: 280px;
+                padding: 16px 20px;
+                font-size: 1.05em;
             }
         }
     </style>
 </head>
 <body onclick="corazon(event)">
 
+    <!-- Bloque de la Cuenta Atrás -->
     <div id="bloque-espera">
         <h1>🤍 Falta muy poco... 🤍</h1>
         <p>Esta sorpresa se abrirá automáticamente el 29 de Julio a las 4:00 PM</p>
@@ -124,13 +148,16 @@
         </div>
     </div>
 
+    <!-- Bloque Desbloqueado: PDF tipo Cine Grande (Cambia "mi-sorpresa.pdf" si hace falta) -->
     <div id="bloque-desbloqueado" class="contenedor-pdf">
-        <iframe src="mi-sorpresa.pdf"></iframe>
+        <iframe src="mi-sorpresa.pdf" type="application/pdf"></iframe>
     </div>
 
-    <a href="javascript:void(0);" onclick="cerrarVentana()" class="btn-cerrar">← Volver a nuestra historia</a>
+    <!-- Tu botón mágico de volver -->
+    <a href="javascript:void(0);" onclick="cerrarVentana()" id="boton-navegacion" class="btn-cerrar">← Volver a nuestra historia</a>
 
     <script>
+        // Fecha objetivo: 29 de Julio de 2026 a las 16:00
         const fechaObjetivo = new Date(2026, 6, 29, 16, 0, 0).getTime();
 
         const x = setInterval(function() {
@@ -142,30 +169,49 @@
             const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
             const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-            document.getElementById("dias").innerHTML = dias < 10 ? "0" + dias : dias;
-            document.getElementById("horas").innerHTML = horas < 10 ? "0" + horas : horas;
-            document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutos;
-            document.getElementById("segs").innerHTML = segundos < 10 ? "0" + segundos : segundos;
+            // Evitamos números negativos si ya pasó
+            if (distancia > 0) {
+                document.getElementById("dias").innerHTML = dias < 10 ? "0" + dias : dias;
+                document.getElementById("horas").innerHTML = horas < 10 ? "0" + horas : horas;
+                document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutos;
+                document.getElementById("segs").innerHTML = segundos < 10 ? "0" + segundos : segundos;
+            }
 
-            if (distancia < 0) {
+            // CUANDO LLEGA A CERO: Activamos el modo Cine Grande
+            if (distancia <= 0) {
                 clearInterval(x);
+                
+                // 1. Ocultamos el contador y mostramos el PDF grande
                 document.getElementById("bloque-espera").style.display = "none";
-                document.getElementById("bloque-desbloqueado").style.display = "block";
+                document.getElementById("bloque-desbloqueado").style.display = "flex";
+                
+                // 2. Cambiamos el fondo de la pantalla a oscuro elegante
+                document.body.style.backgroundColor = "#1a1a1a";
+                
+                // 3. Transformamos el botón a color rosa con letras blancas
+                const boton = document.getElementById("boton-navegacion");
+                boton.style.backgroundColor = "#e6699c";
+                boton.style.color = "white";
+                boton.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
+                boton.classList.add("modo-cine");
             }
         }, 1000);
 
         function cerrarVentana() {
             window.close();
+            setTimeout(function() {
+                window.location.href = 'index.html'; 
+            }, 100);
         }
 
         function corazon(e) {
             const h = document.createElement('div');
             h.className = 'heart';
             h.innerHTML = '🤍';
-            const x = e.pageX || (e.touches ? e.touches[0].pageX : 0);
-            const y = e.pageY || (e.touches ? e.touches[0].pageY : 0);
-            h.style.left = x + 'px';
-            h.style.top = y + 'px';
+            const xPos = e.pageX || (e.touches ? e.touches[0].pageX : 0);
+            const yPos = e.pageY || (e.touches ? e.touches[0].pageY : 0);
+            h.style.left = xPos + 'px';
+            h.style.top = yPos + 'px';
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 800);
         }

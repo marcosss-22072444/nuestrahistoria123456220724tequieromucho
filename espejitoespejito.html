@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espejito Espejito 🤍</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Fondo oscuro elegante tipo cine */
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .contenedor-video {
+            width: 100%;
+            max-width: 100%;
+            max-height: 75vh; /* Deja margen para el botón en cualquier pantalla */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenedor-video video {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain; /* Se adapta a la pantalla sin deformarse nunca y se ve bien grande */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-cerrar {
+            margin-top: 25px;
+            padding: 14px 35px; /* Un pelín más amplio para mejor pulsación */
+            background-color: #e6699c; /* Tu rosa a juego exacto con tu web */
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-cerrar:active {
+            transform: scale(0.95);
+        }
+
+        /* --- ADAPTACIÓN RESPONSIVE (MÓVIL Y PC) --- */
+
+        /* Ajustes específicos para pantallas grandes (PC) */
+        @media (min-width: 1024px) {
+            .contenedor-video video {
+                max-height: 78vh; /* En PC podemos aprovechar un pelín más el alto */
+            }
+            .btn-cerrar:hover {
+                background-color: #f082ae; /* Efecto visual sutil al pasar el ratón en PC */
+            }
+        }
+
+        /* Ajustes específicos para pantallas pequeñas (Móviles) */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px; /* Menos margen en los bordes para ganar espacio */
+            }
+            .contenedor-video {
+                max-height: 70vh; /* Ajuste para que el botón no quede muy abajo en pantallas cortas */
+            }
+            .contenedor-video video {
+                max-height: 70vh;
+                width: 95%; /* Hace que en móvil el vídeo ocupe casi todo el ancho disponible */
+                border-radius: 15px; /* Bordes un pelín más suaves en pantallas pequeñas */
+            }
+            .btn-cerrar {
+                width: 80%; /* Botón más ancho en móvil para que sea más fácil darle con el pulgar */
+                max-width: 280px;
+                padding: 16px 20px;
+                font-size: 1.05em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-video">
+        <video controls autoplay playsinline>
+            <source src="espejitoespejito.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de este vídeo.
+        </video>
+    </div>
+
+    <a href="javascript:void(0);" onclick="cerrarVentana()" class="btn-cerrar">← Volver a nuestra historia</a>
+
+    <script>
+        function cerrarVentana() {
+            window.close(); // Intenta cerrar la pestaña si el navegador deja
+            
+            // Si el móvil bloquea el cierre automático, regresa seguro a la principal
+            setTimeout(function() {
+                window.location.href = 'index.html'; 
+            }, 100);
+        }
+    </script>
+
+</body>
+</html>

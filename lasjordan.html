@@ -101,6 +101,42 @@
     }
     .music-btn:hover { transform: scale(1.12); background: rgba(192,57,43,0.9); }
 
+    /* --- NUESTRO BOTÓN ADAPTADO A LAS JORDAN --- */
+    .btn-cerrar {
+      margin-top: 45px;
+      padding: 14px 40px;
+      background: linear-gradient(135deg, rgba(139,0,0,0.85), rgba(80,0,3,0.9)); /* Gradiente carmesí a juego */
+      color: #fff;
+      border: 1px solid var(--gold); /* Detalle elegante dorado */
+      border-radius: 4px; /* Cuadrado sutil como el botón de Abrir */
+      font-family: 'Cinzel', serif; /* Misma fuente elegante del título */
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(139,0,0,0.5);
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      opacity: 0; /* Oculto al inicio, aparece mágicamente al final con la fecha */
+      transform: translateY(15px);
+    }
+
+    .btn-cerrar.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .btn-cerrar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(192,57,43,0.8);
+      background: linear-gradient(135deg, rgba(192,57,43,0.9), rgba(139,0,0,0.9));
+    }
+
+    .btn-cerrar:active {
+      transform: scale(0.97);
+    }
+
     /* Page */
     .page {
       position: relative; z-index: 2;
@@ -191,6 +227,15 @@
       background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
       pointer-events: none; z-index: 1;
     }
+
+    /* Adaptación móvil del botón */
+    @media (max-width: 768px) {
+      .btn-cerrar {
+        width: 85%;
+        max-width: 300px;
+        padding: 16px 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -247,6 +292,9 @@
       <span class="date-text">&nbsp;16 julio 2024&nbsp;</span>
       <span class="heart-icon">🤍</span>
     </div>
+
+    <!-- Botón de navegación integrado elegantemente -->
+    <a href="javascript:void(0);" onclick="cerrarVentana()" id="botonVolver" class="btn-cerrar">← Volver a nuestra historia</a>
   </div>
 
   <script>
@@ -298,18 +346,19 @@
       overlay.classList.add('hidden');
       setTimeout(() => overlay.remove(), 850);
 
-      // --- CORREGIDO AQUÍ: Eliminados los 3700ms sobrantes ---
       const lines = document.querySelectorAll('.lyric-line');
       let lastDelay = 0;
       lines.forEach(line => {
         const d = parseInt(line.dataset.delay) || 0;
         if (d > lastDelay) lastDelay = d;
-        // Ahora arranca directamente con el delay original
         setTimeout(() => line.classList.add('visible'), d);
       });
       
-      // La fecha aparece al final de forma fluida
-      setTimeout(() => document.getElementById('finalDate').classList.add('visible'), lastDelay + 800);
+      // La fecha y el botón personalizado aparecen al final de forma fluida
+      setTimeout(() => {
+        document.getElementById('finalDate').classList.add('visible');
+        document.getElementById('botonVolver').classList.add('visible');
+      }, lastDelay + 800);
     });
 
     // Pause / resume
@@ -325,6 +374,13 @@
       musicBtn.textContent = playing ? '▶️' : '🎵';
       playing = !playing;
     });
+
+    function cerrarVentana() {
+      window.close();
+      setTimeout(function() {
+        window.location.href = 'index.html'; 
+      }, 100);
+    }
   </script>
 </body>
 </html>

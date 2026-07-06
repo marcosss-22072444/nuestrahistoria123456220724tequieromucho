@@ -22,7 +22,6 @@
             box-sizing: border-box;
             padding: 20px;
             overflow: hidden;
-            transition: background-color 0.5s ease; /* Transición suave al cambiar a modo cine */
         }
 
         /* --- ESTILOS CUENTA ATRÁS --- */
@@ -48,9 +47,9 @@
         .numero { font-size: 2rem; font-weight: 600; display: block; }
         .etiqueta { font-size: 0.8rem; text-transform: uppercase; font-weight: 300; }
 
-        /* --- ESTILOS CONTENEDOR PDF (IGUAL AL DEL SEVILLA FC) --- */
+        /* --- ESTILOS CONTENEDOR PDF (MODO CINE, OCULTO AL INICIO) --- */
         .contenedor-pdf {
-            display: none; /* Oculto al principio */
+            display: none; /* COMPLETAMENTE OCULTO MIENTRAS HAYA CUENTA ATRÁS */
             width: 100%;
             max-width: 100%;
             height: 75vh; 
@@ -62,7 +61,7 @@
         .contenedor-pdf iframe {
             width: 100%;
             height: 100%;
-            max-width: 600px; /* Ancho ideal de lectura */
+            max-width: 600px; /* Ancho ideal de lectura tipo cómic */
             border: none;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -72,7 +71,7 @@
         .btn-cerrar {
             margin-top: 25px;
             padding: 14px 35px;
-            background-color: white; /* Blanco al principio para resaltar sobre el rosa */
+            background-color: white; /* Blanco al principio sobre el fondo rosa */
             color: #e6699c;
             border: none;
             border-radius: 50px;
@@ -82,11 +81,18 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-decoration: none; 
             display: inline-block;
-            transition: all 0.3s ease;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
         .btn-cerrar:active {
             transform: scale(0.95);
+        }
+
+        /* Cuando se active el modo cine, el botón cambia a este estilo */
+        .btn-cerrar.modo-cine {
+            background-color: #e6699c;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         /* --- EFECTO CORAZONES --- */
@@ -135,7 +141,7 @@
 </head>
 <body onclick="corazon(event)">
 
-    <!-- Bloque de la Cuenta Atrás -->
+    <!-- Bloque de la Cuenta Atrás (Se borra entero al terminar) -->
     <div id="bloque-espera">
         <h1>🤍 Falta muy poco... 🤍</h1>
         <p>Esta sorpresa se abrirá automáticamente el 29 de Julio a las 4:00 PM</p>
@@ -148,16 +154,15 @@
         </div>
     </div>
 
-    <!-- Bloque Desbloqueado: PDF tipo Cine Grande (Cambia "mi-sorpresa.pdf" si hace falta) -->
+    <!-- Bloque Desbloqueado: PDF gigante (Solo se activa al llegar a cero) -->
     <div id="bloque-desbloqueado" class="contenedor-pdf">
-        <iframe src="mi-sorpresa.pdf" type="application/pdf"></iframe>
+        <iframe src="SPIDER-MAN BRAND NEW DAY.pdf" type="application/pdf"></iframe>
     </div>
 
-    <!-- Tu botón mágico de volver -->
+    <!-- Botón de navegación -->
     <a href="javascript:void(0);" onclick="cerrarVentana()" id="boton-navegacion" class="btn-cerrar">← Volver a nuestra historia</a>
 
     <script>
-        // Fecha objetivo: 29 de Julio de 2026 a las 16:00
         const fechaObjetivo = new Date(2026, 6, 29, 16, 0, 0).getTime();
 
         const x = setInterval(function() {
@@ -169,30 +174,28 @@
             const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
             const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-            // Evitamos números negativos si ya pasó
             if (distancia > 0) {
                 document.getElementById("dias").innerHTML = dias < 10 ? "0" + dias : dias;
                 document.getElementById("horas").innerHTML = horas < 10 ? "0" + horas : horas;
-                document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutos;
+                document.getElementById("mins").innerHTML = minutos < 10 ? "0" + minutos : minutes;
                 document.getElementById("segs").innerHTML = segundos < 10 ? "0" + segundos : segundos;
             }
 
-            // CUANDO LLEGA A CERO: Activamos el modo Cine Grande
+            // AL LLEGAR A CERO: Limpieza total y cambio a modo cine
             if (distancia <= 0) {
                 clearInterval(x);
                 
-                // 1. Ocultamos el contador y mostramos el PDF grande
+                // 1. Desaparece por completo todo lo de la cuenta atrás
                 document.getElementById("bloque-espera").style.display = "none";
+                
+                // 2. Aparece el PDF con su formato grande
                 document.getElementById("bloque-desbloqueado").style.display = "flex";
                 
-                // 2. Cambiamos el fondo de la pantalla a oscuro elegante
+                // 3. El fondo cambia al negro elegante de cine
                 document.body.style.backgroundColor = "#1a1a1a";
                 
-                // 3. Transformamos el botón a color rosa con letras blancas
+                // 4. El botón pasa a ser rosa con letras blancas automáticamente
                 const boton = document.getElementById("boton-navegacion");
-                boton.style.backgroundColor = "#e6699c";
-                boton.style.color = "white";
-                boton.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
                 boton.classList.add("modo-cine");
             }
         }, 1000);

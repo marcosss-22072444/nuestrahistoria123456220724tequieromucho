@@ -100,13 +100,12 @@
             height: 100%;
             overflow: hidden;
             border-radius: 10px;
-            background: #fafafa; /* Fondo claro para las fotos que no sean perfectamente cuadradas o verticales */
+            background: #fafafa;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* CRÍTICO: "contain" hace que la foto se encoja o estire para verse COMPLETA sin recortes */
         .wrapper-media img, .wrapper-media video {
             width: 100%;
             height: 100%;
@@ -185,17 +184,29 @@
         let paginaActual = 0;
         const album = document.getElementById('album');
 
-        // 1. Añadimos la Portada fija
+        // 1. Añadimos la Portada fija siempre en la página 1
         paginasData.push({ esPortada: true, layout: 'portada', elementos: [{ tipo: 'foto', src: 'foto2.jpg' }] });
 
-        // 2. Crear las listas de archivos
+        // 2. Crear las listas básicas de archivos
         let fotos = [];
         for (let i = 10; i <= totalFotos; i++) fotos.push({ tipo: 'foto', src: `foto${i}.jpg` });
 
         let videos = [];
         for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
 
-        // Intercalar fotos y videos equitativamente
+        // --- FUNCIÓN DE MEZCLADO (Desordena de forma 100% aleatoria) ---
+        function desordenar(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Desordenamos las fotos y los videos por separado antes de juntarlos
+        desordenar(fotos);
+        desordenar(videos);
+
+        // Intercalar las fotos desordenadas y los videos desordenados equitativamente
         let listaMultimedia = [];
         let r_foto = 0, r_video = 0;
         const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
@@ -223,14 +234,12 @@
             let elementosEnPagina = 1;
             let patron = numPaginaContador % 4;
 
-            // Calculamos cuántos elementos meter asegurando que queden suficientes archivos
             let restantes = totalElementos - mediaIndex;
             if (patron === 2 && restantes >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
             else if (patron === 3 && restantes >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
             else if (patron === 0 && restantes >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
             else if (patron === 1 && restantes >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
             else {
-                // Si quedan poquitos al final de la lista, ajustamos dinámicamente al espacio real
                 if (restantes === 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
                 else if (restantes === 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
                 else { layoutClase = 'layout-1'; elementosEnPagina = 1; }
@@ -244,7 +253,6 @@
                 }
             }
 
-            // Evitamos insertar páginas vacías por error bajo cualquier circunstancia
             if (deEstaPagina.length > 0) {
                 paginasData.push({ esPortada: false, layout: layoutClase, elementos: deEstaPagina });
                 numPaginaContador++;

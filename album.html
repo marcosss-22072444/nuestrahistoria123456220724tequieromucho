@@ -160,7 +160,7 @@
 
     <div class="contenedor-libro">
         <div class="libro" id="album">
-            <div class="pagina portada" style="z-index: 1000;">
+            <div class="pagina portada" style="z-index: 1000;" id="portada-inicial">
                 <h2>ALBUM 2 AÑOS</h2>
                 <div class="wrapper-media">
                     <img src="foto2.jpg" alt="Portada">
@@ -175,71 +175,66 @@
     </div>
 
     <script>
-        // Parámetros base estables
+        // Parámetros estructurales base
         const totalFotos = 496;
         const totalVideos = 46;
         let paginasData = [];
         let paginaActual = 0;
         const album = document.getElementById('album');
 
-        // Configuración de la portada en la estructura de datos
+        // 1. GENERACIÓN INMEDIATA DE LA ESTRUCTURA DE DATOS
         paginasData.push({ esPortada: true, layout: 'portada', elementos: [{ tipo: 'foto', src: 'foto2.jpg' }] });
 
-        // Generar el listado masivo de forma diferida en segundo plano (No bloquea la pantalla)
-        setTimeout(() => {
-            let fotos = [];
-            for (let i = 10; i <= totalFotos; i++) fotos.push({ tipo: 'foto', src: `foto${i}.jpg` });
+        let fotos = [];
+        for (let i = 10; i <= totalFotos; i++) fotos.push({ tipo: 'foto', src: `foto${i}.jpg` });
 
-            let videos = [];
-            for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
+        let videos = [];
+        for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
 
-            let listaMultimedia = [];
-            let r_foto = 0, r_video = 0;
-            const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
+        let listaMultimedia = [];
+        let r_foto = 0, r_video = 0;
+        const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
 
-            while (r_foto < fotos.length || r_video < videos.length) {
-                if (listaMultimedia.length % (intervaloVideos + 1) === 0 && r_video < videos.length) {
-                    listaMultimedia.push(videos[r_video]);
-                    r_video++;
-                } else if (r_foto < fotos.length) {
-                    listaMultimedia.push(fotos[r_foto]);
-                    r_foto++;
-                } else if (r_video < videos.length) {
-                    listaMultimedia.push(videos[r_video]);
-                    r_video++;
+        while (r_foto < fotos.length || r_video < videos.length) {
+            if (listaMultimedia.length % (intervaloVideos + 1) === 0 && r_video < videos.length) {
+                listaMultimedia.push(videos[r_video]);
+                r_video++;
+            } else if (r_foto < fotos.length) {
+                listaMultimedia.push(fotos[r_foto]);
+                r_foto++;
+            } else if (r_video < videos.length) {
+                listaMultimedia.push(videos[r_video]);
+                r_video++;
+            }
+        }
+
+        let mediaIndex = 0;
+        let totalElementos = listaMultimedia.length;
+        let numPaginaContador = 2;
+
+        while (mediaIndex < totalElementos) {
+            let layoutClase = 'layout-1';
+            let elementosEnPagina = 1;
+            let patron = numPaginaContador % 4;
+
+            if (patron === 2 && (totalElementos - mediaIndex) >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
+            else if (patron === 3 && (totalElementos - mediaIndex) >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
+            else if (patron === 0 && (totalElementos - mediaIndex) >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
+            else if (patron === 1 && (totalElementos - mediaIndex) >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
+
+            let deEstaPagina = [];
+            for (let e = 0; e < elementosEnPagina; e++) {
+                if (mediaIndex < totalElementos) {
+                    deEstaPagina.push(listaMultimedia[mediaIndex]);
+                    mediaIndex++;
                 }
             }
 
-            let mediaIndex = 0;
-            let totalElementos = listaMultimedia.length;
-            let numPaginaContador = 2;
+            paginasData.push({ esPortada: false, layout: layoutClase, elementos: deEstaPagina });
+            numPaginaContador++;
+        }
 
-            while (mediaIndex < totalElementos) {
-                let layoutClase = 'layout-1';
-                let elementosEnPagina = 1;
-                let patron = numPaginaContador % 4;
-
-                if (patron === 2 && (totalElementos - mediaIndex) >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
-                else if (patron === 3 && (totalElementos - mediaIndex) >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
-                else if (patron === 0 && (totalElementos - mediaIndex) >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
-                else if (patron === 1 && (totalElementos - mediaIndex) >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
-
-                let de EstaPagina = [];
-                for (let e = 0; e < elementosEnPagina; e++) {
-                    if (mediaIndex < totalElementos) {
-                        de EstaPagina.push(listaMultimedia[mediaIndex]);
-                        mediaIndex++;
-                    }
-                }
-
-                paginasData.push({ esPortada: false, layout: layoutClase, elementos: de EstaPagina });
-                numPaginaContador++;
-            }
-            
-            // Habilitar los eventos de clics una vez cargados los datos internos
-            configurarManejadores();
-        }, 50);
-
+        // 2. FUNCIÓN DE RENDERIZADO FIABLE
         function renderizarPaginas() {
             album.innerHTML = '';
 
@@ -307,11 +302,13 @@
             const clicX = e.clientX - rect.left;
 
             if (clicX < rect.width / 2) {
+                // Mitad izquierda: retroceder
                 if (paginaActual > 0) {
                     paginaActual--;
                     renderizarPaginas();
                 }
             } else {
+                // Mitad derecha: avanzar
                 if (paginaActual < paginasData.length - 1) {
                     paginaActual++;
                     renderizarPaginas();
@@ -319,17 +316,13 @@
             }
         }
 
-        function configurarManejadores() {
-            const portadaInicial = document.querySelector('.pagina.portada');
-            if (portadaInicial) {
-                portadaInicial.addEventListener('click', function(e) {
-                    if (paginasData.length > 1) {
-                        paginaActual = 1;
-                        renderizarPaginas();
-                    }
-                });
+        // Evento de disparo directo para la primera interacción en pantalla
+        document.getElementById('portada-inicial').addEventListener('click', function(e) {
+            if (paginasData.length > 1) {
+                paginaActual = 1;
+                renderizarPaginas();
             }
-        }
+        });
     </script>
 </body>
 </html>

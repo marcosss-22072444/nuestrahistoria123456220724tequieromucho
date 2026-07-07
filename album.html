@@ -100,17 +100,21 @@
             height: 100%;
             overflow: hidden;
             border-radius: 10px;
-            background: #fdfdfd;
+            background: #fafafa; /* Fondo claro para las fotos que no sean perfectamente cuadradas o verticales */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* CRÍTICO: "contain" hace que la foto se encoja o estire para verse COMPLETA sin recortes */
         .wrapper-media img, .wrapper-media video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; 
             display: block;
         }
 
-        /* Layouts de páginas */
+        /* Layouts de colajes equilibrados */
         .layout-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
         .layout-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
         .layout-3 { grid-template-columns: 1.1fr 1fr; grid-template-rows: 1fr 1fr; }
@@ -136,7 +140,7 @@
             line-height: 1.4;
         }
 
-        /* Ajustes críticos para móviles */
+        /* Ajustes adaptables para pantallas de móviles */
         @media (max-width: 768px) {
             .contenedor-libro {
                 height: 50vh;
@@ -175,22 +179,23 @@
     </div>
 
     <script>
-        // Parámetros estructurales base
         const totalFotos = 496;
         const totalVideos = 46;
         let paginasData = [];
         let paginaActual = 0;
         const album = document.getElementById('album');
 
-        // 1. GENERACIÓN INMEDIATA DE LA ESTRUCTURA DE DATOS
+        // 1. Añadimos la Portada fija
         paginasData.push({ esPortada: true, layout: 'portada', elementos: [{ tipo: 'foto', src: 'foto2.jpg' }] });
 
+        // 2. Crear las listas de archivos
         let fotos = [];
         for (let i = 10; i <= totalFotos; i++) fotos.push({ tipo: 'foto', src: `foto${i}.jpg` });
 
         let videos = [];
         for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
 
+        // Intercalar fotos y videos equitativamente
         let listaMultimedia = [];
         let r_foto = 0, r_video = 0;
         const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
@@ -208,6 +213,7 @@
             }
         }
 
+        // 3. Distribución en páginas sin dejar huecos en blanco
         let mediaIndex = 0;
         let totalElementos = listaMultimedia.length;
         let numPaginaContador = 2;
@@ -217,10 +223,18 @@
             let elementosEnPagina = 1;
             let patron = numPaginaContador % 4;
 
-            if (patron === 2 && (totalElementos - mediaIndex) >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
-            else if (patron === 3 && (totalElementos - mediaIndex) >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
-            else if (patron === 0 && (totalElementos - mediaIndex) >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
-            else if (patron === 1 && (totalElementos - mediaIndex) >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
+            // Calculamos cuántos elementos meter asegurando que queden suficientes archivos
+            let restantes = totalElementos - mediaIndex;
+            if (patron === 2 && restantes >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
+            else if (patron === 3 && restantes >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
+            else if (patron === 0 && restantes >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
+            else if (patron === 1 && restantes >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
+            else {
+                // Si quedan poquitos al final de la lista, ajustamos dinámicamente al espacio real
+                if (restantes === 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
+                else if (restantes === 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
+                else { layoutClase = 'layout-1'; elementosEnPagina = 1; }
+            }
 
             let deEstaPagina = [];
             for (let e = 0; e < elementosEnPagina; e++) {
@@ -230,11 +244,14 @@
                 }
             }
 
-            paginasData.push({ esPortada: false, layout: layoutClase, elementos: deEstaPagina });
-            numPaginaContador++;
+            // Evitamos insertar páginas vacías por error bajo cualquier circunstancia
+            if (deEstaPagina.length > 0) {
+                paginasData.push({ esPortada: false, layout: layoutClase, elementos: deEstaPagina });
+                numPaginaContador++;
+            }
         }
 
-        // 2. FUNCIÓN DE RENDERIZADO FIABLE
+        // 4. Renderizado del libro interactivo
         function renderizarPaginas() {
             album.innerHTML = '';
 
@@ -302,13 +319,11 @@
             const clicX = e.clientX - rect.left;
 
             if (clicX < rect.width / 2) {
-                // Mitad izquierda: retroceder
                 if (paginaActual > 0) {
                     paginaActual--;
                     renderizarPaginas();
                 }
             } else {
-                // Mitad derecha: avanzar
                 if (paginaActual < paginasData.length - 1) {
                     paginaActual++;
                     renderizarPaginas();
@@ -316,7 +331,7 @@
             }
         }
 
-        // Evento de disparo directo para la primera interacción en pantalla
+        // Activador para el primer toque en la portada
         document.getElementById('portada-inicial').addEventListener('click', function(e) {
             if (paginasData.length > 1) {
                 paginaActual = 1;

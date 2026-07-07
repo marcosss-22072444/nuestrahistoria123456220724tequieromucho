@@ -18,24 +18,24 @@
             justify-content: center;
             min-height: 100vh;
             color: white;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 300;
-            margin: 10px 0;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 15px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 0 10px;
         }
 
-        /* Contenedor del Libro Abierto (Adaptable) */
         .contenedor-libro {
-            width: 95vw;
-            max-width: 950px;
-            height: 65vh;
-            max-height: 600px;
-            perspective: 2000px;
+            width: 92vw;
+            max-width: 900px;
+            height: 60vh;
+            max-height: 550px;
+            perspective: 1500px;
             display: flex;
             justify-content: center;
             position: relative;
@@ -48,7 +48,6 @@
             transform-style: preserve-3d;
         }
 
-        /* Estilo base de cada página */
         .pagina {
             width: 50%;
             height: 100%;
@@ -56,57 +55,52 @@
             top: 0;
             right: 0;
             transform-origin: left center;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.5s ease-in-out;
             transform-style: preserve-3d;
             cursor: pointer;
-            box-shadow: inset 4px 0 20px rgba(0,0,0,0.12), 5px 5px 20px rgba(0,0,0,0.1);
+            box-shadow: inset 4px 0 20px rgba(0,0,0,0.1), 5px 5px 15px rgba(0,0,0,0.08);
             background: #ffffff;
-            border-radius: 0 15px 15px 0;
+            border-radius: 0 12px 12px 0;
             box-sizing: border-box;
-            padding: 20px 20px 35px 20px;
+            padding: 15px;
             display: grid;
             gap: 10px;
-            user-select: none;
         }
 
-        /* Lomo del libro */
         .pagina::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 20px;
+            width: 15px;
             height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.08), transparent);
+            background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
             z-index: 10;
         }
 
-        /* Diseño específico de la Portada (Página 1) */
         .portada {
             display: flex !important;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px;
-            background: #fff5f8; /* Un tono sutilmente más cálido */
+            padding: 20px;
+            background: #ffffff;
         }
 
         .portada h2 {
             font-family: 'Caveat', cursive;
             color: #e6699c;
-            font-size: 2.8rem;
-            margin: 0 0 20px 0;
+            font-size: 2.5rem;
+            margin: 0 0 15px 0;
             text-align: center;
         }
 
-        /* Contenedores multimedia */
         .wrapper-media {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            background: #fafafa;
+            border-radius: 10px;
+            background: #fdfdfd;
         }
 
         .wrapper-media img, .wrapper-media video {
@@ -116,43 +110,46 @@
             display: block;
         }
 
-        /* LAYOUTS DE COLAGES (Mismo Estilo 2) */
+        /* Layouts de páginas */
         .layout-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
         .layout-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
-        .layout-3 { grid-template-columns: 1.2fr 1fr; grid-template-rows: 1fr 1fr; }
+        .layout-3 { grid-template-columns: 1.1fr 1fr; grid-template-rows: 1fr 1fr; }
         .layout-3 .wrapper-media:nth-child(1) { grid-row: span 2; }
         .layout-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
 
-        /* Numeración */
         .num-pagina {
             position: absolute;
-            bottom: 12px;
-            font-size: 0.75rem;
-            color: #b0b0b0;
-            width: calc(100% - 40px);
+            bottom: 8px;
+            font-size: 0.7rem;
+            color: #a0a0a0;
+            width: calc(100% - 30px);
             text-align: center;
             pointer-events: none;
         }
 
         .controles {
             margin-top: 20px;
-            font-size: 0.9em;
-            opacity: 0.85;
+            font-size: 0.85rem;
+            opacity: 0.9;
             text-align: center;
+            padding: 0 15px;
+            line-height: 1.4;
         }
 
-        /* ADAPTACIÓN PARA MÓVILES (Responsive) */
+        /* Ajustes críticos para móviles */
         @media (max-width: 768px) {
             .contenedor-libro {
-                height: 55vh;
+                height: 50vh;
+                width: 85vw;
             }
             .pagina {
-                width: 100%; /* En móviles se ve como una sola página para que no quede todo diminuto */
+                width: 100%;
                 left: 0;
-                border-radius: 15px;
+                border-radius: 12px;
+                padding: 10px;
             }
             .portada h2 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
         }
     </style>
@@ -163,89 +160,89 @@
 
     <div class="contenedor-libro">
         <div class="libro" id="album">
+            <div class="pagina portada" style="z-index: 1000;">
+                <h2>ALBUM 2 AÑOS</h2>
+                <div class="wrapper-media">
+                    <img src="foto2.jpg" alt="Portada">
+                </div>
+                <div class="num-pagina">- 1 -</div>
             </div>
+        </div>
     </div>
 
     <div class="controles">
-        <span id="txt-instrucciones">Toca los lados para hojear vuestra historia 📖</span>
+        <span id="txt-instrucciones">Toca los bordes para pasar a la siguiente página 🤍</span>
     </div>
 
     <script>
-        // 1. CONFIGURACIÓN E INTERCALADO DE ARCHIVOS
+        // Parámetros base estables
         const totalFotos = 496;
         const totalVideos = 46;
-
-        let fotos = [];
-        for (let i = 10; i <= totalFotos; i++) fotos.push({ tipo: 'foto', src: `foto${i}.jpg` });
-
-        let videos = [];
-        for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
-
-        let listaMultimedia = [];
-        let r_foto = 0, r_video = 0;
-        const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
-
-        while (r_foto < fotos.length || r_video < videos.length) {
-            if (listaMultimedia.length % (intervaloVideos + 1) === 0 && r_video < videos.length) {
-                listaMultimedia.push(videos[r_video]);
-                r_video++;
-            } else if (r_foto < fotos.length) {
-                listaMultimedia.push(fotos[r_foto]);
-                r_foto++;
-            } else if (r_video < videos.length) {
-                listaMultimedia.push(videos[r_video]);
-                r_video++;
-            }
-        }
-
-        // 2. AGRUPACIÓN DE CONTENIDOS EN PÁGINAS (En memoria limpia)
         let paginasData = [];
-        
-        // --- Añadimos la Portada como la Página Estructural N°1 ---
-        paginasData.push({
-            esPortada: true,
-            layout: 'portada',
-            elementos: [{ tipo: 'foto', src: 'foto2.jpg' }]
-        });
+        let paginaActual = 0;
+        const album = document.getElementById('album');
 
-        let mediaIndex = 0;
-        let totalElementos = listaMultimedia.length;
-        let numPaginaContador = 2; // Empieza en 2 porque la 1 es la portada
+        // Configuración de la portada en la estructura de datos
+        paginasData.push({ esPortada: true, layout: 'portada', elementos: [{ tipo: 'foto', src: 'foto2.jpg' }] });
 
-        while (mediaIndex < totalElementos) {
-            let layoutClase = 'layout-1';
-            let elementosEnPagina = 1;
+        // Generar el listado masivo de forma diferida en segundo plano (No bloquea la pantalla)
+        setTimeout(() => {
+            let fotos = [];
+            for (let i = 10; i <= totalFotos; i++) fotos.push({ tipo: 'foto', src: `foto${i}.jpg` });
 
-            let patron = numPaginaContador % 4;
-            if (patron === 2 && (totalElementos - mediaIndex) >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
-            else if (patron === 3 && (totalElementos - mediaIndex) >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
-            else if (patron === 0 && (totalElementos - mediaIndex) >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
-            else if (patron === 1 && (totalElementos - mediaIndex) >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
+            let videos = [];
+            for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
 
-            let de EstaPagina = [];
-            for (let e = 0; e < elementosEnPagina; e++) {
-                if (mediaIndex < totalElementos) {
-                    de EstaPagina.push(listaMultimedia[mediaIndex]);
-                    mediaIndex++;
+            let listaMultimedia = [];
+            let r_foto = 0, r_video = 0;
+            const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
+
+            while (r_foto < fotos.length || r_video < videos.length) {
+                if (listaMultimedia.length % (intervaloVideos + 1) === 0 && r_video < videos.length) {
+                    listaMultimedia.push(videos[r_video]);
+                    r_video++;
+                } else if (r_foto < fotos.length) {
+                    listaMultimedia.push(fotos[r_foto]);
+                    r_foto++;
+                } else if (r_video < videos.length) {
+                    listaMultimedia.push(videos[r_video]);
+                    r_video++;
                 }
             }
 
-            paginasData.push({
-                esPortada: false,
-                layout: layoutClase,
-                elementos: de EstaPagina
-            });
-            numPaginaContador++;
-        }
+            let mediaIndex = 0;
+            let totalElementos = listaMultimedia.length;
+            let numPaginaContador = 2;
 
-        // 3. MOTOR ULTRA-LIGERO DE RENDERIZADO BAJO DEMANDA (Súper rápido)
-        const album = document.getElementById('album');
-        let paginaActual = 0; // Índice de la página en la que estamos
+            while (mediaIndex < totalElementos) {
+                let layoutClase = 'layout-1';
+                let elementosEnPagina = 1;
+                let patron = numPaginaContador % 4;
 
-        function renderizarAlbum() {
-            album.innerHTML = ''; // Vaciamos por completo el DOM anterior para liberar RAM inmediatamente
+                if (patron === 2 && (totalElementos - mediaIndex) >= 1) { layoutClase = 'layout-1'; elementosEnPagina = 1; }
+                else if (patron === 3 && (totalElementos - mediaIndex) >= 2) { layoutClase = 'layout-2'; elementosEnPagina = 2; }
+                else if (patron === 0 && (totalElementos - mediaIndex) >= 3) { layoutClase = 'layout-3'; elementosEnPagina = 3; }
+                else if (patron === 1 && (totalElementos - mediaIndex) >= 4) { layoutClase = 'layout-4'; elementosEnPagina = 4; }
 
-            // Renderiza únicamente 3 páginas: la anterior, la actual y la siguiente.
+                let de EstaPagina = [];
+                for (let e = 0; e < elementosEnPagina; e++) {
+                    if (mediaIndex < totalElementos) {
+                        de EstaPagina.push(listaMultimedia[mediaIndex]);
+                        mediaIndex++;
+                    }
+                }
+
+                paginasData.push({ esPortada: false, layout: layoutClase, elementos: de EstaPagina });
+                numPaginaContador++;
+            }
+            
+            // Habilitar los eventos de clics una vez cargados los datos internos
+            configurarManejadores();
+        }, 50);
+
+        function renderizarPaginas() {
+            album.innerHTML = '';
+
             for (let i = paginaActual - 1; i <= paginaActual + 1; i++) {
                 if (i < 0 || i >= paginasData.length) continue;
 
@@ -254,7 +251,6 @@
                 
                 if (data.esPortada) {
                     divPagina.className = `pagina portada`;
-                    
                     const titulo = document.createElement('h2');
                     titulo.innerText = "ALBUM 2 AÑOS";
                     divPagina.appendChild(titulo);
@@ -267,7 +263,6 @@
                     divPagina.appendChild(wrapper);
                 } else {
                     divPagina.className = `pagina ${data.layout}`;
-                    
                     data.elementos.forEach(item => {
                         const wrapper = document.createElement('div');
                         wrapper.className = 'wrapper-media';
@@ -282,23 +277,18 @@
                             video.muted = true;
                             video.loop = true;
                             video.playsInline = true;
-                            // Si es la página visible actual, reproducimos el video de inmediato
-                            if (i === paginaActual) {
-                                video.autoplay = true;
-                            }
+                            if (i === paginaActual) video.autoplay = true;
                             wrapper.appendChild(video);
                         }
                         divPagina.appendChild(wrapper);
                     });
                 }
 
-                // Número de página inferior
                 const numLabel = document.createElement('div');
                 numLabel.className = 'num-pagina';
                 numLabel.innerText = `- ${i + 1} -`;
                 divPagina.appendChild(numLabel);
 
-                // Control visual del efecto 3D Flip
                 if (i < paginaActual) {
                     divPagina.style.transform = "rotateY(-180deg)";
                     divPagina.style.zIndex = i + 1;
@@ -307,32 +297,39 @@
                     divPagina.style.zIndex = paginasData.length - i;
                 }
 
-                // Evento de clic inteligente (Izquierda retrocede, Derecha avanza)
-                divPagina.addEventListener('click', (e) => {
-                    const rect = divPagina.getBoundingClientRect();
-                    const clicX = e.clientX - rect.left;
-
-                    if (clicX < rect.width / 2) {
-                        // Clic lado izquierdo: Retroceder hoja
-                        if (paginaActual > 0) {
-                            paginaActual--;
-                            renderizarAlbum();
-                        }
-                    } else {
-                        // Clic lado derecho: Avanzar hoja
-                        if (paginaActual < paginasData.length - 1) {
-                            paginaActual++;
-                            renderizarAlbum();
-                        }
-                    }
-                });
-
+                divPagina.addEventListener('click', procesarClic);
                 album.appendChild(divPagina);
             }
         }
 
-        // Iniciar el álbum por primera vez cargando únicamente la portada
-        renderizarAlbum();
+        function procesarClic(e) {
+            const rect = this.getBoundingClientRect();
+            const clicX = e.clientX - rect.left;
+
+            if (clicX < rect.width / 2) {
+                if (paginaActual > 0) {
+                    paginaActual--;
+                    renderizarPaginas();
+                }
+            } else {
+                if (paginaActual < paginasData.length - 1) {
+                    paginaActual++;
+                    renderizarPaginas();
+                }
+            }
+        }
+
+        function configurarManejadores() {
+            const portadaInicial = document.querySelector('.pagina.portada');
+            if (portadaInicial) {
+                portadaInicial.addEventListener('click', function(e) {
+                    if (paginasData.length > 1) {
+                        paginaActual = 1;
+                        renderizarPaginas();
+                    }
+                });
+            }
+        }
     </script>
 </body>
 </html>

@@ -131,12 +131,37 @@
         }
 
         .controles {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 0.85rem;
             opacity: 0.9;
             text-align: center;
             padding: 0 15px;
             line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ESTILO 100% CALCADO DEL BOTÓN ORIGINAL */
+        .btn-volver-galeria {
+            margin-top: 5px;
+            padding: 14px 35px;
+            background-color: white;
+            color: #e6699c;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .btn-volver-galeria:active {
+            transform: scale(0.95);
         }
 
         /* Ajustes adaptables para pantallas de móviles */
@@ -154,6 +179,10 @@
             .portada h2 {
                 font-size: 2rem;
             }
+            .btn-volver-galeria {
+                width: 80%;
+                max-width: 280px;
+            }
         }
     </style>
 </head>
@@ -163,6 +192,7 @@
 
     <div class="contenedor-libro">
         <div class="libro" id="album">
+            <!-- Portada estática inicial inmediata -->
             <div class="pagina portada" style="z-index: 1000;" id="portada-inicial">
                 <h2>ALBUM 2 AÑOS</h2>
                 <div class="wrapper-media">
@@ -175,6 +205,7 @@
 
     <div class="controles">
         <span id="txt-instrucciones">Toca los bordes para pasar a la siguiente página 🤍</span>
+        <a href="javascript:void(0);" onclick="cerrarVentana()" class="btn-volver-galeria">← Volver a nuestra historia</a>
     </div>
 
     <script>
@@ -185,7 +216,7 @@
         const album = document.getElementById('album');
 
         // 1. Añadimos la Portada fija siempre en la página 1
-        paginasData.push({ esPortada: true, layout: 'portada', elementos: [{ tipo: 'foto', src: 'foto2.jpg' }] });
+        paginasData.push({ esPortada: true, layout: 'portada', tituloTexto: "ALBUM 2 AÑOS", elementos: [{ tipo: 'foto', src: 'foto2.jpg' }] });
 
         // 2. Crear las listas básicas de archivos
         let fotos = [];
@@ -194,9 +225,8 @@
         let videos = [];
         for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
 
-        // --- ALGORITMO DE MEZCLADO FIJO CON SEMILLA STÁTICA ---
-        // Esto hace que el "desorden" sea matemático e idéntico en cada recarga.
-        let seed = 20240214; // Puedes cambiar este número por el que quieras si deseas variar el orden fijo
+        // Algoritmo de mezclado controlado con Semilla Fija
+        let seed = 20240214; 
         function randomConSemilla() {
             let x = Math.sin(seed++) * 10000;
             return x - Math.floor(x);
@@ -209,11 +239,9 @@
             }
         }
 
-        // Aplicamos el desorden fijo a listas por separado antes de unirlas
         desordenarFijo(fotos);
         desordenarFijo(videos);
 
-        // Intercalar las fotos desordenadas fijas y los videos equitativamente
         let listaMultimedia = [];
         let r_foto = 0, r_video = 0;
         const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;
@@ -266,6 +294,9 @@
             }
         }
 
+        // INSERCIÓN DE LA PÁGINA FINAL: "FIN 🤍"
+        paginasData.push({ esPortada: true, layout: 'portada', tituloTexto: "FIN 🤍", elementos: [] });
+
         // 4. Renderizado del libro interactivo
         function renderizarPaginas() {
             album.innerHTML = '';
@@ -279,15 +310,17 @@
                 if (data.esPortada) {
                     divPagina.className = `pagina portada`;
                     const titulo = document.createElement('h2');
-                    titulo.innerText = "ALBUM 2 AÑOS";
+                    titulo.innerText = data.tituloTexto;
                     divPagina.appendChild(titulo);
 
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'wrapper-media';
-                    const img = document.createElement('img');
-                    img.src = data.elementos[0].src;
-                    wrapper.appendChild(img);
-                    divPagina.appendChild(wrapper);
+                    if (data.elementos && data.elementos.length > 0) {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'wrapper-media';
+                        const img = document.createElement('img');
+                        img.src = data.elementos[0].src;
+                        wrapper.appendChild(img);
+                        divPagina.appendChild(wrapper);
+                    }
                 } else {
                     divPagina.className = `pagina ${data.layout}`;
                     data.elementos.forEach(item => {
@@ -353,6 +386,15 @@
                 renderizarPaginas();
             }
         });
+
+        // SCRIPT CALCADO CON CIERRE SEGURO AUTOMÁTICO
+        function cerrarVentana() {
+            window.close();
+            
+            setTimeout(function() {
+                window.location.href = 'index.html'; 
+            }, 100);
+        }
     </script>
 </body>
 </html>

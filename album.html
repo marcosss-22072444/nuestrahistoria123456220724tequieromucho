@@ -55,7 +55,7 @@
             top: 0;
             right: 0;
             transform-origin: left center;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
             transform-style: preserve-3d;
             cursor: pointer;
             box-shadow: inset 4px 0 20px rgba(0,0,0,0.1), 5px 5px 15px rgba(0,0,0,0.08);
@@ -65,6 +65,14 @@
             padding: 15px;
             display: grid;
             gap: 10px;
+            /* Oculta la parte trasera para que no se vea el contenido invertido */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* Página comodín trasera simulada que queda limpia a la izquierda */
+        .pagina.volteada {
+            background: #ffffff !important;
         }
 
         .pagina::before {
@@ -192,7 +200,6 @@
 
     <div class="contenedor-libro">
         <div class="libro" id="album">
-            <!-- Portada estática inicial inmediata -->
             <div class="pagina portada" style="z-index: 1000;" id="portada-inicial">
                 <h2>ALBUM 2 AÑOS</h2>
                 <div class="wrapper-media">
@@ -349,12 +356,15 @@
                 numLabel.innerText = `- ${i + 1} -`;
                 divPagina.appendChild(numLabel);
 
+                // Lógica de animación: si la página ya pasó, gira a -180deg y activa su reverso en blanco ocultando elementos
                 if (i < paginaActual) {
                     divPagina.style.transform = "rotateY(-180deg)";
                     divPagina.style.zIndex = i + 1;
+                    divPagina.classList.add('volteada'); // Hace que quede en blanco liso a la izquierda
                 } else {
                     divPagina.style.transform = "rotateY(0deg)";
                     divPagina.style.zIndex = paginasData.length - i;
+                    divPagina.classList.remove('volteada');
                 }
 
                 divPagina.addEventListener('click', procesarClic);

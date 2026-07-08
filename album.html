@@ -194,19 +194,26 @@
         let videos = [];
         for (let i = 10; i <= totalVideos; i++) videos.push({ tipo: 'video', src: `video${i}.mp4` });
 
-        // --- FUNCIÓN DE MEZCLADO (Desordena de forma 100% aleatoria) ---
-        function desordenar(array) {
+        // --- ALGORITMO DE MEZCLADO FIJO CON SEMILLA STÁTICA ---
+        // Esto hace que el "desorden" sea matemático e idéntico en cada recarga.
+        let seed = 20240214; // Puedes cambiar este número por el que quieras si deseas variar el orden fijo
+        function randomConSemilla() {
+            let x = Math.sin(seed++) * 10000;
+            return x - Math.floor(x);
+        }
+
+        function desordenarFijo(array) {
             for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
+                const j = Math.floor(randomConSemilla() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
 
-        // Desordenamos las fotos y los videos por separado antes de juntarlos
-        desordenar(fotos);
-        desordenar(videos);
+        // Aplicamos el desorden fijo a listas por separado antes de unirlas
+        desordenarFijo(fotos);
+        desordenarFijo(videos);
 
-        // Intercalar las fotos desordenadas y los videos desordenados equitativamente
+        // Intercalar las fotos desordenadas fijas y los videos equitativamente
         let listaMultimedia = [];
         let r_foto = 0, r_video = 0;
         const intervaloVideos = Math.floor(fotos.length / videos.length) || 10;

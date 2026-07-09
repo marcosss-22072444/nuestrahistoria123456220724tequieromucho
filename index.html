@@ -193,7 +193,7 @@
             if (val === '220724') {
                 document.getElementById('pass').blur();
                 if (player && player.cueVideoById) {
-                    player.setVolume(25);
+                    player.setVolume(100); // <-- Cambiado de 25 a 100 para el volumen máximo
                 }
                 document.getElementById('capa1-password').style.display = 'none';
                 document.getElementById('capa2-frase').style.display = 'flex';

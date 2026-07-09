@@ -24,14 +24,15 @@
         .contenedor-carta {
             background: white;
             color: #e6699c;
-            max-width: 500px;
+            max-width: 600px; /* Un poco más ancho para que en PC se lea mejor */
             width: 85%;
             margin: 40px auto 20px auto;
-            padding: 35px;
+            padding: 45px; /* Más espacio interior para PC */
             border-radius: 30px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             text-align: left;
             animation: entradaCarta 0.8s ease-out;
+            box-sizing: border-box;
         }
 
         @keyframes entradaCarta {
@@ -41,16 +42,16 @@
 
         .titulo-carta {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             color: #e6699c;
         }
 
         p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 22px;
             font-weight: 400;
             text-align: justify;
         }
@@ -58,19 +59,19 @@
         .firma {
             text-align: center;
             font-weight: 600;
-            font-size: 1.2rem;
-            margin-top: 35px;
+            font-size: 1.3rem;
+            margin-top: 40px;
             border-top: 1px dashed #e6699c;
-            padding-top: 20px;
+            padding-top: 25px;
         }
 
-        /* DISEÑO DE TU NUEVO BOTÓN */
+        /* DISEÑO DE TU BOTÓN (RESPONSIVO) */
         .btn-volver {
-            background-color: #fdf0f5; /* Rosa muy clarito de fondo */
+            background-color: #fdf0f5; 
             color: #e6699c;
             border: none;
             padding: 15px 40px;
-            border-radius: 50px; /* Súper redondeado como la imagen */
+            border-radius: 50px; 
             font-weight: 600;
             font-size: 1.1em;
             cursor: pointer;
@@ -79,11 +80,35 @@
             transition: transform 0.2s;
             text-decoration: none;
             display: inline-block;
+            text-align: center;
         }
 
         .btn-volver:hover {
             transform: scale(1.03);
             background-color: #ffffff;
+        }
+
+        /* ADAPTACIÓN AUTOMÁTICA PARA MÓVILES (PANTALLAS PEQUEÑAS) */
+        @media (max-width: 600px) {
+            .contenedor-carta {
+                width: 90%;
+                padding: 25px; /* Reducimos padding en móvil para aprovechar la pantalla */
+                margin: 20px auto 15px auto;
+            }
+            .titulo-carta {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+            .btn-volver {
+                width: 80%; /* El botón se hace un poco más grande en móvil para que sea fácil pulsar */
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
